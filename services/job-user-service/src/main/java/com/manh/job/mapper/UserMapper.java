@@ -3,6 +3,10 @@ package com.manh.job.mapper;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.model.User;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class UserMapper {
     public  static UserResponse toDTO(User user) {
         UserResponse dto = new UserResponse();
@@ -17,5 +21,16 @@ public class UserMapper {
         dto.setCreatedAt(user.getCreatedAt());
 
         return dto;
+    }
+    public static List<UserResponse> toDTOList(List<User> users) {
+        return users.stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public static Set<UserResponse> toDTOSet(Set<User> users) {
+        return users.stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toSet());
     }
 }
