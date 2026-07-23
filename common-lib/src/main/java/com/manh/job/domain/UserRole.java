@@ -1,4 +1,4 @@
-package com.zosh.job.domain;
+package com.manh.job.domain;
 
 public enum UserRole {
     ROLE_ADMIN,
