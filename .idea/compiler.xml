@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="job-portal-common" />
+        <module name="job-portal-company-service" />
         <module name="job-user-service" />
       </profile>
     </annotationProcessing>
@@ -15,6 +16,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="job-portal-common" options="-parameters" />
+      <module name="job-portal-company-service" options="-parameters" />
       <module name="job-user-service" options="-parameters" />
     </option>
   </component>
