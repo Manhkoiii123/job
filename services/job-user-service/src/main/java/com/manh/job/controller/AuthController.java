@@ -1,6 +1,7 @@
 package com.manh.job.controller;
 
 import com.manh.job.model.User;
+import com.manh.job.payload.request.LoginRequest;
 import com.manh.job.payload.request.SignupRequest;
 import com.manh.job.payload.response.AuthResponse;
 import com.manh.job.service.AuthService;
@@ -21,6 +22,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signup(@RequestBody @Valid SignupRequest req) throws Exception{
        return ResponseEntity.ok(authService.signup(req));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest req) throws Exception{
+       return ResponseEntity.ok(authService.login(req));
     }
 
 }
