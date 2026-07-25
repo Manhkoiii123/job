@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3398828e-2816-447c-864f-c5531f6b2bda" name="Changes" comment="" />
+    <list default="true" id="3398828e-2816-447c-864f-c5531f6b2bda" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +41,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.JobPortalCompanyServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.JobPortalJobServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.JobUserServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -55,8 +58,10 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.manh.job.dto" />
-      <recent name="com.manh.job.dto.response" />
       <recent name="com.manh.job.domain" />
+      <recent name="com.manh.job.model" />
+      <recent name="com.manh.job.model.embeddable" />
+      <recent name="com.manh.job.dto.response" />
     </key>
   </component>
   <component name="SharedIndexes">

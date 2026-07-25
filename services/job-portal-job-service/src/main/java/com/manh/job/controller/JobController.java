@@ -1,0 +1,81 @@
+package com.manh.job.controller;
+
+import com.manh.job.dto.ApiResponse;
+import com.manh.job.dto.JobRequest;
+import com.manh.job.dto.response.JobResponse;
+import com.manh.job.payload.request.JobSearchRequest;
+import com.manh.job.service.JobService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/jobs")
+@RequiredArgsConstructor
+public class JobController {
+
+    private final JobService jobService;
+
+    @PostMapping
+    public ResponseEntity<JobResponse> createJob(
+            @RequestHeader("X-User-Id") Long employerId,
+            @RequestBody @Valid JobRequest req) {
+        JobResponse createdJob = jobService.createJob(employerId, req);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdJob);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<JobResponse> getJobById(@PathVariable Long id) throws Exception {
+//        jobService.incrementViewCount(id);
+        return ResponseEntity.ok(jobService.getJobById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<JobResponse>> getAllJobs(@ModelAttribute JobSearchRequest request) {
+        return ResponseEntity.ok(jobService.getAllJobs(request));
+    }
+
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<JobResponse>> getJobsByCompany(@PathVariable Long companyId) {
+        return ResponseEntity.ok(jobService.getJobsByCompany(companyId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<JobResponse> updateJob(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId,
+            @RequestBody @Valid JobRequest req) throws Exception {
+        return ResponseEntity.ok(jobService.updateJob(id, employerId, req));
+    }
+
+    @PatchMapping("/{id}/publish")
+    public ResponseEntity<JobResponse> publishJob(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId) throws Exception {
+        return ResponseEntity.ok(jobService.publishJob(id, employerId));
+    }
+
+    @PatchMapping("/{id}/close")
+    public ResponseEntity<JobResponse> closeJob(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId) throws Exception {
+        return ResponseEntity.ok(jobService.closeJob(id, employerId));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteJob(
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId) throws Exception {
+        jobService.deleteJob(id, employerId);
+        return ResponseEntity.ok(new ApiResponse("Job deleted successfully",true));
+    }
+
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<JobResponse>> getAllJobsAdmin() {
+        return ResponseEntity.ok(jobService.getAllJobsAdmin());
+    }
+}
