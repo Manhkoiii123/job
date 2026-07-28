@@ -1,9 +1,8 @@
 package com.manh.job.mapper;
 
-import com.manh.job.dto.JobCategoryResponse;
+import com.manh.job.payload.response.JobCategoryResponse;
 import com.manh.job.model.JobCategory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

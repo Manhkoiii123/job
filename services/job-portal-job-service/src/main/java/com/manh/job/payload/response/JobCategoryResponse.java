@@ -1,4 +1,4 @@
-package com.manh.job.dto;
+package com.manh.job.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

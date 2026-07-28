@@ -1,9 +1,9 @@
 package com.manh.job.service.impl;
 
 import com.manh.job.domain.JobStatus;
-import com.manh.job.dto.JobRequest;
+import com.manh.job.payload.request.JobRequest;
 import com.manh.job.dto.response.CompanyResponse;
-import com.manh.job.dto.response.JobResponse;
+import com.manh.job.payload.response.JobResponse;
 import com.manh.job.mapper.JobMapper;
 import com.manh.job.model.Job;
 import com.manh.job.model.embeddable.JobLocation;

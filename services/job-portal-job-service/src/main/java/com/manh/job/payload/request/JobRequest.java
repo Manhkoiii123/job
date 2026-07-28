@@ -1,4 +1,4 @@
-package com.manh.job.dto;
+package com.manh.job.payload.request;
 
 import com.manh.job.domain.ExperienceLevel;
 import com.manh.job.domain.JobType;

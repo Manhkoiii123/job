@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
-import com.manh.job.dto.JobRequest;
-import com.manh.job.dto.response.JobResponse;
+import com.manh.job.payload.request.JobRequest;
+import com.manh.job.payload.response.JobResponse;
 import com.manh.job.payload.request.JobSearchRequest;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.manh.job.mapper;
 
 import com.manh.job.dto.response.CompanyResponse;
-import com.manh.job.dto.response.JobResponse;
+import com.manh.job.payload.response.JobResponse;
 import com.manh.job.model.Job;
 import com.manh.job.model.embeddable.JobLocation;
 import com.manh.job.model.embeddable.SalaryRange;

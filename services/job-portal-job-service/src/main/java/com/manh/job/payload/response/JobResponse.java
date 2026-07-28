@@ -1,10 +1,10 @@
-package com.manh.job.dto.response;
+package com.manh.job.payload.response;
 
 import com.manh.job.domain.ExperienceLevel;
 import com.manh.job.domain.JobStatus;
 import com.manh.job.domain.JobType;
 import com.manh.job.domain.WorkMode;
-import com.manh.job.dto.CompanySummaryResponse;
+import com.manh.job.dto.response.CompanyResponse;
 import lombok.*;
 
 import java.math.BigDecimal;
