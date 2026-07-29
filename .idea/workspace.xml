@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3398828e-2816-447c-864f-c5531f6b2bda" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/controller/JobSkillController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/controller/JobSkillController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
