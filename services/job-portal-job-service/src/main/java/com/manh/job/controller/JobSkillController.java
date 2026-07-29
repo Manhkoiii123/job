@@ -31,7 +31,7 @@ public class JobSkillController {
         return ResponseEntity.ok(skillService.getAllSkills());
     }
 
-    @GetMapping("/${id}")
+    @GetMapping("/{id}")
     public ResponseEntity<JobSkillResponse> getSkillById(
             @PathVariable Long id
     )  throws Exception {
