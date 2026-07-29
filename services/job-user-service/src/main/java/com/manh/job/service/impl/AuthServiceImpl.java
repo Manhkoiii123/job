@@ -3,7 +3,7 @@ package com.manh.job.service.impl;
 import com.manh.job.domain.UserRole;
 import com.manh.job.domain.UserStatus;
 import com.manh.job.mapper.UserMapper;
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import com.manh.job.payload.request.LoginRequest;
 import com.manh.job.payload.request.SignupRequest;
 import com.manh.job.payload.response.AuthResponse;

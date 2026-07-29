@@ -1,7 +1,7 @@
 package com.manh.job.specification;
 
 import com.manh.job.domain.JobStatus;
-import com.manh.job.model.Job;
+import com.manh.job.modal.Job;
 import com.manh.job.payload.request.JobSearchRequest;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;

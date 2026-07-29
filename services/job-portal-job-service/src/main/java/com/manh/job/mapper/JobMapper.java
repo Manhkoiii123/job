@@ -2,9 +2,9 @@ package com.manh.job.mapper;
 
 import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.payload.response.JobResponse;
-import com.manh.job.model.Job;
-import com.manh.job.model.embeddable.JobLocation;
-import com.manh.job.model.embeddable.SalaryRange;
+import com.manh.job.modal.Job;
+import com.manh.job.modal.embeddable.JobLocation;
+import com.manh.job.modal.embeddable.SalaryRange;
 
 public class JobMapper {
     public static JobResponse toResponse(Job job, CompanyResponse companyResponse) {

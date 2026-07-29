@@ -1,11 +1,11 @@
-package com.manh.job.model;
+package com.manh.job.modal;
 
 import com.manh.job.domain.ExperienceLevel;
 import com.manh.job.domain.JobStatus;
 import com.manh.job.domain.JobType;
 import com.manh.job.domain.WorkMode;
-import com.manh.job.model.embeddable.JobLocation;
-import com.manh.job.model.embeddable.SalaryRange;
+import com.manh.job.modal.embeddable.JobLocation;
+import com.manh.job.modal.embeddable.SalaryRange;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

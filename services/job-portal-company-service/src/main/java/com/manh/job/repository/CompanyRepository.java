@@ -3,7 +3,7 @@ package com.manh.job.repository;
 import com.manh.job.domain.CompanyStatus;
 import com.manh.job.domain.CompanyType;
 import com.manh.job.domain.IndustryType;
-import com.manh.job.model.Company;
+import com.manh.job.modal.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

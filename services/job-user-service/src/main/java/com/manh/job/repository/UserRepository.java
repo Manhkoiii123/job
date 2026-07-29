@@ -1,6 +1,6 @@
 package com.manh.job.repository;
 
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Long> {

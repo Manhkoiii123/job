@@ -2,13 +2,11 @@ package com.manh.job.mapper;
 
 import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.dto.response.SocialLinkResponse;
-import com.manh.job.model.Company;
-import com.manh.job.model.SocialLink;
+import com.manh.job.modal.Company;
+import com.manh.job.modal.SocialLink;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CompanyMapper {
     private  static SocialLinkResponse toSocialLinkResponse(SocialLink socialLink){

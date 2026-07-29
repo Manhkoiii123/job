@@ -1,7 +1,7 @@
 package com.manh.job.mapper;
 
 import com.manh.job.payload.response.JobCategoryResponse;
-import com.manh.job.model.JobCategory;
+import com.manh.job.modal.JobCategory;
 
 import java.util.List;
 import java.util.stream.Collectors;

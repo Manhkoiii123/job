@@ -1,4 +1,4 @@
-package com.manh.job.model.embeddable;
+package com.manh.job.modal.embeddable;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

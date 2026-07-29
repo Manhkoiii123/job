@@ -2,7 +2,7 @@ package com.manh.job.controller;
 
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.UserMapper;
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import com.manh.job.payload.request.UpdateUserRequest;
 import com.manh.job.service.UserService;
 import lombok.RequiredArgsConstructor;

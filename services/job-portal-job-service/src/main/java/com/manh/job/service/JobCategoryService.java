@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
 import com.manh.job.payload.response.JobCategoryResponse;
-import com.manh.job.model.JobCategory;
+import com.manh.job.modal.JobCategory;
 import com.manh.job.payload.request.JobCategoryRequest;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.manh.job.repository;
 
-import com.manh.job.model.JobCategory;
+import com.manh.job.modal.JobCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

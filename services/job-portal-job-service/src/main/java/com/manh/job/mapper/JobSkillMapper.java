@@ -1,6 +1,6 @@
 package com.manh.job.mapper;
 
-import com.manh.job.model.JobSkill;
+import com.manh.job.modal.JobSkill;
 import com.manh.job.payload.response.JobSkillResponse;
 
 public class JobSkillMapper {

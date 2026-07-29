@@ -1,10 +1,9 @@
 package com.manh.job.service;
 import com.manh.job.dto.response.UserResponse;
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import com.manh.job.payload.request.UpdateUserRequest;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
     User getUserByEmail(String email) throws Exception;

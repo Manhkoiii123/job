@@ -2,7 +2,7 @@ package com.manh.job.service;
 
 import com.manh.job.payload.request.JobSkillRequest;
 import com.manh.job.payload.response.JobSkillResponse;
-import com.manh.job.model.JobSkill;
+import com.manh.job.modal.JobSkill;
 
 import java.util.List;
 import java.util.Set;

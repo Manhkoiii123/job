@@ -1,8 +1,7 @@
 package com.manh.job.service.impl;
 
 import com.manh.job.mapper.JobTagMapper;
-import com.manh.job.model.Job;
-import com.manh.job.model.JobTag;
+import com.manh.job.modal.JobTag;
 import com.manh.job.payload.request.JobTagRequest;
 import com.manh.job.payload.response.JobTagResponse;
 import com.manh.job.repository.JobTagRepository;

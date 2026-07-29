@@ -1,4 +1,4 @@
-package com.manh.job.model;
+package com.manh.job.modal;
 
 import com.manh.job.domain.*;
 import jakarta.persistence.*;

@@ -3,7 +3,7 @@ package com.manh.job.service.impl;
 import com.manh.job.domain.UserStatus;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.UserMapper;
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import com.manh.job.payload.request.UpdateUserRequest;
 import com.manh.job.repository.UserRepository;
 import com.manh.job.service.UserService;

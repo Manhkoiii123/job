@@ -1,6 +1,6 @@
 package com.manh.job.service;
 
-import com.manh.job.model.JobTag;
+import com.manh.job.modal.JobTag;
 import com.manh.job.payload.request.JobTagRequest;
 import com.manh.job.payload.response.JobTagResponse;
 

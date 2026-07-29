@@ -1,6 +1,6 @@
 package com.manh.job.mapper;
 
-import com.manh.job.model.JobTag;
+import com.manh.job.modal.JobTag;
 import com.manh.job.payload.response.JobTagResponse;
 
 public class JobTagMapper {

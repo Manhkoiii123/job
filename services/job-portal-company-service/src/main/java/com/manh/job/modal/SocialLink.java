@@ -1,4 +1,4 @@
-package com.manh.job.model;
+package com.manh.job.modal;
 import com.manh.job.domain.SocialPlatform;
 import jakarta.persistence.Embeddable;
 import lombok.*;

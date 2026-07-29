@@ -1,6 +1,6 @@
 package com.manh.job.repository;
 
-import com.manh.job.model.JobSkill;
+import com.manh.job.modal.JobSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

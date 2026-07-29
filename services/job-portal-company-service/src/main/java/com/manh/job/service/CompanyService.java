@@ -5,7 +5,7 @@ import com.manh.job.domain.CompanyType;
 import com.manh.job.domain.IndustryType;
 import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.dto.request.CompanyRequest;
-import com.manh.job.model.Company;
+import com.manh.job.modal.Company;
 
 import java.util.List;
 

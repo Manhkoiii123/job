@@ -1,6 +1,5 @@
 package com.manh.job.controller;
 
-import com.manh.job.model.User;
 import com.manh.job.payload.request.LoginRequest;
 import com.manh.job.payload.request.SignupRequest;
 import com.manh.job.payload.response.AuthResponse;

@@ -1,16 +1,13 @@
 package com.manh.job.service.impl;
 
-import com.manh.job.mapper.JobMapper;
 import com.manh.job.mapper.JobSkillMapper;
-import com.manh.job.model.JobSkill;
+import com.manh.job.modal.JobSkill;
 import com.manh.job.payload.request.JobSkillRequest;
 import com.manh.job.payload.response.JobSkillResponse;
 import com.manh.job.repository.JobSkillRepository;
 import com.manh.job.service.JobSkillService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;

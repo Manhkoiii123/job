@@ -1,12 +1,14 @@
-package com.manh.job.model;
-
+package com.manh.job.modal;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,8 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="job_tags")
-public class JobTag {
+@Table(name="job_categories")
+public class JobCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -27,7 +29,24 @@ public class JobTag {
     @Column(unique = true)
     private String slug;
 
+    private String description;
+
+    private String iconUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private JobCategory parent;
+
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobCategory> subCategories = new ArrayList<>();
+
+    private Boolean active = true;
+
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 }

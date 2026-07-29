@@ -1,6 +1,6 @@
 package com.manh.job.security;
 
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 import com.manh.job.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

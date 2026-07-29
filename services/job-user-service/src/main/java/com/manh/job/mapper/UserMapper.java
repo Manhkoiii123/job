@@ -1,7 +1,7 @@
 package com.manh.job.mapper;
 
 import com.manh.job.dto.response.UserResponse;
-import com.manh.job.model.User;
+import com.manh.job.modal.User;
 
 import java.util.List;
 import java.util.Set;
