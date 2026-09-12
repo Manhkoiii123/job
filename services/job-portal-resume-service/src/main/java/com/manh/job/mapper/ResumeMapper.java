@@ -3,9 +3,11 @@ package com.manh.job.mapper;
 import com.manh.job.dto.PersonalInfoResponse;
 import com.manh.job.modal.Education;
 import com.manh.job.modal.PersonalInfo;
+import com.manh.job.modal.Project;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.ResumeSkill;
 import com.manh.job.payload.response.EducationResponse;
+import com.manh.job.payload.response.ProjectResponse;
 import com.manh.job.payload.response.ResumeResponse;
 import com.manh.job.payload.response.ResumeSkillResponse;
 
@@ -67,6 +69,22 @@ public class ResumeMapper {
                 .isCurrentlyStudying(edu.getIsCurrentlyStudying())
                 .description(edu.getDescription())
                 .displayOrder(edu.getDisplayOrder())
+                .build();
+    }
+
+    public static ProjectResponse toProjectResponse(Project project) {
+        if (project == null) return null;
+        return ProjectResponse.builder()
+                .id(project.getId())
+                .title(project.getTitle())
+                .description(project.getDescription())
+                .technologies(project.getTechnologies())
+                .projectUrl(project.getProjectUrl())
+                .sourceCodeUrl(project.getSourceCodeUrl())
+                .startDate(project.getStartDate())
+                .endDate(project.getEndDate())
+                .isOngoing(project.getIsOngoing())
+                .displayOrder(project.getDisplayOrder())
                 .build();
     }
 }
