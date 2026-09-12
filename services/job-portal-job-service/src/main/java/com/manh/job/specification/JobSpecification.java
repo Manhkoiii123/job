@@ -2,7 +2,7 @@ package com.manh.job.specification;
 
 import com.manh.job.domain.JobStatus;
 import com.manh.job.modal.Job;
-import com.manh.job.payload.request.JobSearchRequest;
+import com.manh.job.dto.request.JobSearchRequest;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

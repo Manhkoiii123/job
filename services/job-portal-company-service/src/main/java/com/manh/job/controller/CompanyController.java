@@ -38,6 +38,13 @@ public class CompanyController {
                 .body(companyService.getCompanyById(id));
     }
 
+        @GetMapping("/my")
+        public ResponseEntity<CompanyResponse> getMyCompany(
+                        @RequestHeader("X-User-Id") Long ownerId
+        ) throws Exception {
+                return ResponseEntity.ok(companyService.getMyCompany(ownerId));
+        }
+
     @GetMapping
     public ResponseEntity<List<CompanyResponse>> getAllCompanies(
             @RequestParam(required = false) CompanyType companyType,

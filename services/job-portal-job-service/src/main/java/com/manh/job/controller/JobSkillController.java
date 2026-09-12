@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.JobSkillRequest;
-import com.manh.job.payload.response.JobSkillResponse;
+import com.manh.job.dto.request.JobSkillRequest;
+import com.manh.job.dto.response.JobSkillResponse;
 import com.manh.job.service.JobSkillService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

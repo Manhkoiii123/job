@@ -1,44 +1,56 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.client.CompanyClient;
 import com.manh.job.domain.JobStatus;
-import com.manh.job.payload.request.JobRequest;
+import com.manh.job.dto.request.JobRequest;
 import com.manh.job.dto.response.CompanyResponse;
-import com.manh.job.payload.response.JobResponse;
+import com.manh.job.dto.response.JobResponse;
 import com.manh.job.mapper.JobMapper;
 import com.manh.job.modal.Job;
+import com.manh.job.modal.JobCategory;
+import com.manh.job.modal.JobSkill;
+import com.manh.job.modal.JobTag;
 import com.manh.job.modal.embeddable.JobLocation;
 import com.manh.job.modal.embeddable.SalaryRange;
-import com.manh.job.payload.request.JobSearchRequest;
+import com.manh.job.dto.request.JobSearchRequest;
 import com.manh.job.repository.JobRepository;
+import com.manh.job.repository.JobTagRepository;
+import com.manh.job.service.JobCategoryService;
+import com.manh.job.service.JobSkillService;
 import com.manh.job.service.JobService;
 import com.manh.job.specification.JobSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class JobServiceImpl implements JobService {
     private final JobRepository jobRepository;
+    private final CompanyClient companyClient;
+    private final JobCategoryService jobCategoryService;
+    private final JobSkillService jobSkillService;
+    private final JobTagRepository jobTagRepository;
 
     @Override
-    public JobResponse createJob(Long employerId, JobRequest req) {
-//      fetch company by employer id
-        Long companyId = 1L;
+    public JobResponse createJob(Long employerId, JobRequest req) throws Exception {
+        CompanyResponse company = companyClient.getCompanyByOwnerId(employerId);
         Job job = Job.builder()
                 .title(req.getTitle())
                 .description(req.getDescription())
                 .requirements(req.getRequirements())
                 .responsibilities(req.getResponsibilities())
                 .benefits(req.getBenefits())
-                .companyId(companyId)
+                .companyId(company.getId())
                 .employerId(employerId)
-//                .category(category)
-//                .skills(skills)
-//                .tags(tags)
+                .category(resolveCategory(req.getCategoryId()))
+                .skills(resolveSkills(req.getSkillIds()))
+                .tags(resolveTags(req.getTagIds()))
                 .location(buildLocation(req))
                 .salaryRange(buildSalaryRange(req))
                 .jobType(req.getJobType())
@@ -51,7 +63,7 @@ public class JobServiceImpl implements JobService {
 
         Job savedJob = jobRepository.save(job);
 
-        return convertToResponse(savedJob);
+        return convertToResponse(savedJob, company);
 
     }
 
@@ -90,9 +102,9 @@ public class JobServiceImpl implements JobService {
         job.setRequirements(req.getRequirements());
         job.setResponsibilities(req.getResponsibilities());
         job.setBenefits(req.getBenefits());
-//        job.setCategory(category);
-//        job.setSkills(skills);
-//        job.setTags(tags);
+        job.setCategory(resolveCategory(req.getCategoryId()));
+        job.setSkills(resolveSkills(req.getSkillIds()));
+        job.setTags(resolveTags(req.getTagIds()));
         job.setLocation(buildLocation(req));
         job.setSalaryRange(buildSalaryRange(req));
         job.setJobType(req.getJobType());
@@ -150,12 +162,38 @@ public class JobServiceImpl implements JobService {
     }
 
     private JobResponse convertToResponse(Job savedJob) {
-//        TODO: fetch company response
-        CompanyResponse companyResponse =  CompanyResponse
-                .builder()
-                .id(savedJob.getCompanyId())
-                .build();
+        CompanyResponse companyResponse = companyClient.getCompanyById(savedJob.getCompanyId());
         return JobMapper.toResponse(savedJob, companyResponse);
+    }
+
+    private JobResponse convertToResponse(Job savedJob, CompanyResponse companyResponse) {
+        return JobMapper.toResponse(savedJob, companyResponse);
+    }
+
+    private JobCategory resolveCategory(Long categoryId) throws Exception {
+        return jobCategoryService.getCategoryEntityById(categoryId);
+    }
+
+    private Set<JobSkill> resolveSkills(Set<Long> skillIds) throws Exception {
+        if (skillIds == null || skillIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        Set<JobSkill> skills = jobSkillService.getSkillsByIds(skillIds);
+        if (skills.size() != skillIds.size()) {
+            throw new Exception("One or more skills were not found");
+        }
+        return skills;
+    }
+
+    private Set<JobTag> resolveTags(Set<Long> tagIds) throws Exception {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        Set<JobTag> tags = new HashSet<>(jobTagRepository.findAllById(tagIds));
+        if (tags.size() != tagIds.size()) {
+            throw new Exception("One or more tags were not found");
+        }
+        return tags;
     }
 
     private SalaryRange buildSalaryRange(JobRequest req) {

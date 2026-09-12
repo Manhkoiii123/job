@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
-import com.manh.job.payload.request.JobSkillRequest;
-import com.manh.job.payload.response.JobSkillResponse;
+import com.manh.job.dto.request.JobSkillRequest;
+import com.manh.job.dto.response.JobSkillResponse;
 import com.manh.job.modal.JobSkill;
 
 import java.util.List;

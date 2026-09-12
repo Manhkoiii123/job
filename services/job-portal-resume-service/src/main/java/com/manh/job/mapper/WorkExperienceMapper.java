@@ -1,7 +1,7 @@
 package com.manh.job.mapper;
 
 import com.manh.job.modal.WorkExperience;
-import com.manh.job.payload.response.WorkExperienceResponse;
+import com.manh.job.dto.response.WorkExperienceResponse;
 
 public class WorkExperienceMapper {
     public static WorkExperienceResponse toWorkExperienceResponse(WorkExperience exp) {

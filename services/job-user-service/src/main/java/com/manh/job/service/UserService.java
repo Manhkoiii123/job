@@ -1,7 +1,7 @@
 package com.manh.job.service;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.modal.User;
-import com.manh.job.payload.request.UpdateUserRequest;
+import com.manh.job.dto.request.UpdateUserRequest;
 
 import java.util.List;
 

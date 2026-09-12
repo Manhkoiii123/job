@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
-import com.manh.job.payload.request.AddLanguageRequest;
-import com.manh.job.payload.response.LanguageResponse;
+import com.manh.job.dto.request.AddLanguageRequest;
+import com.manh.job.dto.response.LanguageResponse;
 
 import java.util.List;
 

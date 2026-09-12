@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
-import com.manh.job.payload.request.AddEducationRequest;
-import com.manh.job.payload.response.EducationResponse;
+import com.manh.job.dto.request.AddEducationRequest;
+import com.manh.job.dto.response.EducationResponse;
 
 import java.util.List;
 

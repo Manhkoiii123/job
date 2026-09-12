@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddLanguageRequest;
-import com.manh.job.payload.response.LanguageResponse;
+import com.manh.job.dto.request.AddLanguageRequest;
+import com.manh.job.dto.response.LanguageResponse;
 import com.manh.job.service.LanguageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

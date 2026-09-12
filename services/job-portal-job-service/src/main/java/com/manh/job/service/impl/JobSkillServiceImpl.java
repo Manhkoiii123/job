@@ -2,8 +2,8 @@ package com.manh.job.service.impl;
 
 import com.manh.job.mapper.JobSkillMapper;
 import com.manh.job.modal.JobSkill;
-import com.manh.job.payload.request.JobSkillRequest;
-import com.manh.job.payload.response.JobSkillResponse;
+import com.manh.job.dto.request.JobSkillRequest;
+import com.manh.job.dto.response.JobSkillResponse;
 import com.manh.job.repository.JobSkillRepository;
 import com.manh.job.service.JobSkillService;
 import lombok.RequiredArgsConstructor;

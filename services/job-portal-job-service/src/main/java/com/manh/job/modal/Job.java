@@ -14,6 +14,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -48,9 +50,27 @@ public class Job {
     @Column(nullable = false)
     private Long employerId;
 
-//    private JobCategory category;
-//    private Set<JobSkill> skills;
-//    private Set<JobTag> tags;
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+        @JoinColumn(name = "category_id", nullable = false)
+        private JobCategory category;
+
+        @ManyToMany(fetch = FetchType.LAZY)
+        @JoinTable(
+            name = "job_job_skills",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+        )
+        @Builder.Default
+        private Set<JobSkill> skills = new HashSet<>();
+
+        @ManyToMany(fetch = FetchType.LAZY)
+        @JoinTable(
+            name = "job_job_tags",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+        )
+        @Builder.Default
+        private Set<JobTag> tags = new HashSet<>();
 
     @Embedded
     private JobLocation location;

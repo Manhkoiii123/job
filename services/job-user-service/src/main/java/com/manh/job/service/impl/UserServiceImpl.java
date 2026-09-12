@@ -4,7 +4,7 @@ import com.manh.job.domain.UserStatus;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.UserMapper;
 import com.manh.job.modal.User;
-import com.manh.job.payload.request.UpdateUserRequest;
+import com.manh.job.dto.request.UpdateUserRequest;
 import com.manh.job.repository.UserRepository;
 import com.manh.job.service.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddWorkExperienceRequest;
-import com.manh.job.payload.response.WorkExperienceResponse;
+import com.manh.job.dto.request.AddWorkExperienceRequest;
+import com.manh.job.dto.response.WorkExperienceResponse;
 import com.manh.job.service.WorkExperienceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

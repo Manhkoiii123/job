@@ -1,7 +1,7 @@
 package com.manh.job.service;
 
-import com.manh.job.payload.request.AddResumeSkillRequest;
-import com.manh.job.payload.response.ResumeSkillResponse;
+import com.manh.job.dto.request.AddResumeSkillRequest;
+import com.manh.job.dto.response.ResumeSkillResponse;
 
 import java.util.List;
 

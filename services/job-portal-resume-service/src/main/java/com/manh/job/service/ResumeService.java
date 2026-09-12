@@ -2,8 +2,8 @@ package com.manh.job.service;
 
 import com.manh.job.dto.PersonalInfoResponse;
 import com.manh.job.modal.Resume;
-import com.manh.job.payload.request.CreateResumeRequest;
-import com.manh.job.payload.response.ResumeResponse;
+import com.manh.job.dto.request.CreateResumeRequest;
+import com.manh.job.dto.response.ResumeResponse;
 
 import java.util.List;
 

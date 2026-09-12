@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddEducationRequest;
-import com.manh.job.payload.response.EducationResponse;
+import com.manh.job.dto.request.AddEducationRequest;
+import com.manh.job.dto.response.EducationResponse;
 import com.manh.job.service.EducationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

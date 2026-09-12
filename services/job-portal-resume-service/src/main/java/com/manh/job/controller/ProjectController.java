@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddProjectRequest;
-import com.manh.job.payload.response.ProjectResponse;
+import com.manh.job.dto.request.AddProjectRequest;
+import com.manh.job.dto.response.ProjectResponse;
 import com.manh.job.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

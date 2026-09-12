@@ -2,8 +2,8 @@ package com.manh.job.service.impl;
 
 import com.manh.job.mapper.JobTagMapper;
 import com.manh.job.modal.JobTag;
-import com.manh.job.payload.request.JobTagRequest;
-import com.manh.job.payload.response.JobTagResponse;
+import com.manh.job.dto.request.JobTagRequest;
+import com.manh.job.dto.response.JobTagResponse;
 import com.manh.job.repository.JobTagRepository;
 import com.manh.job.service.JobTagService;
 import lombok.RequiredArgsConstructor;

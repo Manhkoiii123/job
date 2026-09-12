@@ -7,11 +7,11 @@ import com.manh.job.modal.PersonalInfo;
 import com.manh.job.modal.Project;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.ResumeSkill;
-import com.manh.job.payload.response.EducationResponse;
-import com.manh.job.payload.response.LanguageResponse;
-import com.manh.job.payload.response.ProjectResponse;
-import com.manh.job.payload.response.ResumeResponse;
-import com.manh.job.payload.response.ResumeSkillResponse;
+import com.manh.job.dto.response.EducationResponse;
+import com.manh.job.dto.response.LanguageResponse;
+import com.manh.job.dto.response.ProjectResponse;
+import com.manh.job.dto.response.ResumeResponse;
+import com.manh.job.dto.response.ResumeSkillResponse;
 
 public class ResumeMapper {
     public static PersonalInfoResponse toPersonalInfoResponse(PersonalInfo personalInfo) {

@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
-import com.manh.job.payload.request.LoginRequest;
-import com.manh.job.payload.request.SignupRequest;
-import com.manh.job.payload.response.AuthResponse;
+import com.manh.job.dto.request.LoginRequest;
+import com.manh.job.dto.request.SignupRequest;
+import com.manh.job.dto.response.AuthResponse;
 import com.manh.job.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

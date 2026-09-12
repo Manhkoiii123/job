@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.JobTagRequest;
-import com.manh.job.payload.response.JobTagResponse;
+import com.manh.job.dto.request.JobTagRequest;
+import com.manh.job.dto.response.JobTagResponse;
 import com.manh.job.service.JobTagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

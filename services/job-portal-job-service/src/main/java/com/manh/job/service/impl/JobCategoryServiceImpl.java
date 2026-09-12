@@ -1,9 +1,9 @@
 package com.manh.job.service.impl;
 
-import com.manh.job.payload.response.JobCategoryResponse;
+import com.manh.job.dto.response.JobCategoryResponse;
 import com.manh.job.mapper.JobCategoryMapper;
 import com.manh.job.modal.JobCategory;
-import com.manh.job.payload.request.JobCategoryRequest;
+import com.manh.job.dto.request.JobCategoryRequest;
 import com.manh.job.repository.JobCategoryRepository;
 import com.manh.job.service.JobCategoryService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.manh.job.mapper;
 
 import com.manh.job.modal.JobSkill;
-import com.manh.job.payload.response.JobSkillResponse;
+import com.manh.job.dto.response.JobSkillResponse;
 
 public class JobSkillMapper {
     public static JobSkillResponse toJobSkillResponse(JobSkill skill) {

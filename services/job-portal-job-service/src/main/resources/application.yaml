@@ -1,5 +1,8 @@
 server:
   port: 5003
+services:
+  company:
+    url: http://localhost:5002
 spring:
   application:
     name: job-portal-job-service

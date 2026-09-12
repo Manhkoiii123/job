@@ -1,8 +1,8 @@
 package com.manh.job.service;
 
 import com.manh.job.modal.WorkExperience;
-import com.manh.job.payload.request.AddWorkExperienceRequest;
-import com.manh.job.payload.response.WorkExperienceResponse;
+import com.manh.job.dto.request.AddWorkExperienceRequest;
+import com.manh.job.dto.response.WorkExperienceResponse;
 
 import java.util.List;
 

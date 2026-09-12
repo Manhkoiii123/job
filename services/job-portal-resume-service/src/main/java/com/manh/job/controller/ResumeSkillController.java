@@ -1,8 +1,8 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddResumeSkillRequest;
-import com.manh.job.payload.response.ResumeSkillResponse;
+import com.manh.job.dto.request.AddResumeSkillRequest;
+import com.manh.job.dto.response.ResumeSkillResponse;
 import com.manh.job.service.ResumeSkillService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

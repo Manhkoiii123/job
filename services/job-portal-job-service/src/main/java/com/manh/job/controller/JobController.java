@@ -1,9 +1,9 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.JobRequest;
-import com.manh.job.payload.response.JobResponse;
-import com.manh.job.payload.request.JobSearchRequest;
+import com.manh.job.dto.request.JobRequest;
+import com.manh.job.dto.response.JobResponse;
+import com.manh.job.dto.request.JobSearchRequest;
 import com.manh.job.service.JobService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class JobController {
     @PostMapping
     public ResponseEntity<JobResponse> createJob(
             @RequestHeader("X-User-Id") Long employerId,
-            @RequestBody @Valid JobRequest req) {
+            @RequestBody @Valid JobRequest req) throws Exception {
         JobResponse createdJob = jobService.createJob(employerId, req);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdJob);
     }
