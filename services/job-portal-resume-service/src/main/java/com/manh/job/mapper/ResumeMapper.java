@@ -3,7 +3,9 @@ package com.manh.job.mapper;
 import com.manh.job.dto.PersonalInfoResponse;
 import com.manh.job.modal.PersonalInfo;
 import com.manh.job.modal.Resume;
+import com.manh.job.modal.ResumeSkill;
 import com.manh.job.payload.response.ResumeResponse;
+import com.manh.job.payload.response.ResumeSkillResponse;
 
 public class ResumeMapper {
     public static PersonalInfoResponse toPersonalInfoResponse(PersonalInfo personalInfo) {
@@ -39,5 +41,15 @@ public class ResumeMapper {
                 .updatedAt(resume.getUpdatedAt())
                 .build();
 
+    }
+    public static ResumeSkillResponse toSkillResponse(ResumeSkill skill) {
+        if (skill == null) return null;
+        return ResumeSkillResponse.builder()
+                .id(skill.getId())
+                .skillName(skill.getSkillName())
+                .proficiencyLevel(skill.getProficiencyLevel())
+                .yearsOfExperience(skill.getYearsOfExperience())
+                .displayOrder(skill.getDisplayOrder())
+                .build();
     }
 }
