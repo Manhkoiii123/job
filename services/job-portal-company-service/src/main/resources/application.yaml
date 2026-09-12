@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/job_portal_company
     username: postgres
-    password: manhkoiii
+    password: 123456789
     driver-class-name: org.postgresql.Driver
     jpa:
       hibernate:

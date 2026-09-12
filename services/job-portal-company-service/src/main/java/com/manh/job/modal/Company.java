@@ -74,7 +74,6 @@ public class Company {
 
     @CreationTimestamp
     private LocalDateTime verifiedAt;
-    @UpdateTimestamp
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp

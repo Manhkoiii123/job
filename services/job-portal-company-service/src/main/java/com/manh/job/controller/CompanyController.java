@@ -57,14 +57,14 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.updateCompany(id, ownerId, req));
     }
 
-    @PatchMapping("/${id}/verify")
+    @PatchMapping("/{id}/verify")
     public ResponseEntity<CompanyResponse> verifyCompany(
             @PathVariable long id
     ) throws Exception {
         return ResponseEntity.ok(companyService.verifyCompany(id));
     }
 
-    @PatchMapping("/${id}/deactivate")
+    @PatchMapping("/{id}/deactivate")
     public ResponseEntity<CompanyResponse> deactivateCompany(
             @PathVariable long id
     ) throws Exception {

@@ -6,43 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="3398828e-2816-447c-864f-c5531f6b2bda" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/mapper/CompanyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/mapper/CompanyMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/model/Company.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/model/SocialLink.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/repository/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/repository/CompanyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/service/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/service/impl/CompanyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/service/impl/CompanyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobCategoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobCategoryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobSkillMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobSkillMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobTagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobTagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/Job.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/JobCategory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/JobSkill.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/JobTag.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/embeddable/JobLocation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/model/embeddable/SalaryRange.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobCategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobCategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobSkillRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobSkillRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobTagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/repository/JobTagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobCategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobSkillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobSkillService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobTagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobTagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobCategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobSkillServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobSkillServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobTagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobTagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/specification/JobSpecification.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/specification/JobSpecification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/security/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/security/CustomUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/impl/AuthServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-user-service/src/main/java/com/manh/job/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/UserResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/UserResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/controller/CompanyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/modal/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/java/com/manh/job/modal/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-company-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-company-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,9 +53,18 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.JobPortalCompanyServiceApplication.executor": "Run",
+    "Spring Boot.JobPortalJobServiceApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/08_java/job/code/job",
+    "last_opened_file_path": "D:/02_java/job",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
@@ -108,7 +85,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10315.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10315.125" />
       </set>
     </attachedChunks>
   </component>
@@ -121,5 +99,8 @@
       <updated>1784273490407</updated>
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
