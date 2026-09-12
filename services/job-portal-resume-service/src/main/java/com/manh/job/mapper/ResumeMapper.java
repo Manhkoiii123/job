@@ -2,11 +2,13 @@ package com.manh.job.mapper;
 
 import com.manh.job.dto.PersonalInfoResponse;
 import com.manh.job.modal.Education;
+import com.manh.job.modal.Language;
 import com.manh.job.modal.PersonalInfo;
 import com.manh.job.modal.Project;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.ResumeSkill;
 import com.manh.job.payload.response.EducationResponse;
+import com.manh.job.payload.response.LanguageResponse;
 import com.manh.job.payload.response.ProjectResponse;
 import com.manh.job.payload.response.ResumeResponse;
 import com.manh.job.payload.response.ResumeSkillResponse;
@@ -85,6 +87,16 @@ public class ResumeMapper {
                 .endDate(project.getEndDate())
                 .isOngoing(project.getIsOngoing())
                 .displayOrder(project.getDisplayOrder())
+                .build();
+    }
+
+    public static LanguageResponse toLanguageResponse(Language language) {
+        if (language == null) return null;
+        return LanguageResponse.builder()
+                .id(language.getId())
+                .languageName(language.getLanguageName())
+                .proficiency(language.getProficiency())
+                .displayOrder(language.getDisplayOrder())
                 .build();
     }
 }
