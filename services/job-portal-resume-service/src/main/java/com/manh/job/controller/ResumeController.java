@@ -28,7 +28,7 @@ public class ResumeController {
 
     @GetMapping("/{resumeId}")
     public ResponseEntity<ResumeResponse> getResumeById(
-            @PathVariable Long resumeId,
+            @PathVariable("resumeId") Long resumeId,
             @RequestHeader("X-User-Id") Long candidateId
     ) throws Exception {
         return ResponseEntity.ok(resumeService.getResumeById(resumeId, candidateId));

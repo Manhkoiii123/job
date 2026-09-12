@@ -3,16 +3,14 @@ package com.manh.job.payload.response;
 import com.manh.job.domain.ResumeTemplate;
 import com.manh.job.domain.ResumeVisibility;
 import com.manh.job.dto.PersonalInfoResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
 @Builder
 public class ResumeResponse {
     private Long id;

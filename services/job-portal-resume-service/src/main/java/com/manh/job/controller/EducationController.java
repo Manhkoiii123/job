@@ -1,9 +1,9 @@
 package com.manh.job.controller;
 
 import com.manh.job.dto.ApiResponse;
-import com.manh.job.payload.request.AddResumeSkillRequest;
-import com.manh.job.payload.response.ResumeSkillResponse;
-import com.manh.job.service.ResumeSkillService;
+import com.manh.job.payload.request.AddEducationRequest;
+import com.manh.job.payload.response.EducationResponse;
+import com.manh.job.service.EducationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,46 +21,47 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/resumes/{resumeId}/skills")
+@RequestMapping("/api/resumes/{resumeId}/educations")
 @RequiredArgsConstructor
-public class ResumeSkillController {
-	private final ResumeSkillService resumeSkillService;
+public class EducationController {
+	private final EducationService educationService;
 
 	@PostMapping
-	public ResponseEntity<ResumeSkillResponse> addSkill(
+	public ResponseEntity<EducationResponse> addEducation(
 			@PathVariable("resumeId") Long resumeId,
 			@RequestHeader("X-User-Id") Long candidateId,
-			@RequestBody @Valid AddResumeSkillRequest req
+			@RequestBody @Valid AddEducationRequest req
 	) throws Exception {
-		return ResponseEntity.status(HttpStatus.CREATED).body(resumeSkillService.addSkill(resumeId, candidateId, req));
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(educationService.addEducation(resumeId, candidateId, req));
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ResumeSkillResponse>> getSkills(
+	public ResponseEntity<List<EducationResponse>> getEducations(
 			@PathVariable Long resumeId
 	) {
-		return ResponseEntity.ok(resumeSkillService.getSkills(resumeId));
+		return ResponseEntity.ok(educationService.getEducations(resumeId));
 	}
 
-	@PutMapping("/{skillId}")
-	public ResponseEntity<ResumeSkillResponse> updateSkill(
+	@PutMapping("/{educationId}")
+	public ResponseEntity<EducationResponse> updateEducation(
 			@PathVariable Long resumeId,
-			@PathVariable Long skillId,
+			@PathVariable Long educationId,
 			@RequestHeader("X-User-Id") Long candidateId,
-			@RequestBody @Valid AddResumeSkillRequest req
+			@RequestBody @Valid AddEducationRequest req
 	) throws Exception {
 		return ResponseEntity.ok(
-				resumeSkillService.updateSkill(skillId, resumeId, candidateId, req)
+				educationService.updateEducation(educationId, resumeId, candidateId, req)
 		);
 	}
 
-	@DeleteMapping("/{skillId}")
-	public ResponseEntity<ApiResponse> deleteSkill(
+	@DeleteMapping("/{educationId}")
+	public ResponseEntity<ApiResponse> deleteEducation(
 			@PathVariable Long resumeId,
-			@PathVariable Long skillId,
+			@PathVariable Long educationId,
 			@RequestHeader("X-User-Id") Long candidateId
 	) throws Exception {
-		resumeSkillService.deleteSkill(skillId, resumeId, candidateId);
-		return ResponseEntity.ok(new ApiResponse("Resume skill deleted successfully", true));
+		educationService.deleteEducation(educationId, resumeId, candidateId);
+		return ResponseEntity.ok(new ApiResponse("Education deleted successfully", true));
 	}
 }

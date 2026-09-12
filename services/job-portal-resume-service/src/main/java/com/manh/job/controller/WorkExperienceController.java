@@ -19,7 +19,7 @@ public class WorkExperienceController {
 
     @PostMapping
     public ResponseEntity<WorkExperienceResponse> addWorkExperience(
-            @PathVariable Long resumeId,
+            @PathVariable("resumeId") Long resumeId,
             @RequestHeader("X-User-Id") Long candidateId,
             @RequestBody @Valid AddWorkExperienceRequest req
     ) throws Exception {

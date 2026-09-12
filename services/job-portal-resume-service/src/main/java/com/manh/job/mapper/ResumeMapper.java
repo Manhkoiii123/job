@@ -1,9 +1,11 @@
 package com.manh.job.mapper;
 
 import com.manh.job.dto.PersonalInfoResponse;
+import com.manh.job.modal.Education;
 import com.manh.job.modal.PersonalInfo;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.ResumeSkill;
+import com.manh.job.payload.response.EducationResponse;
 import com.manh.job.payload.response.ResumeResponse;
 import com.manh.job.payload.response.ResumeSkillResponse;
 
@@ -50,6 +52,21 @@ public class ResumeMapper {
                 .proficiencyLevel(skill.getProficiencyLevel())
                 .yearsOfExperience(skill.getYearsOfExperience())
                 .displayOrder(skill.getDisplayOrder())
+                .build();
+    }
+    public static EducationResponse toEducationResponse(Education edu) {
+        if (edu == null) return null;
+        return EducationResponse.builder()
+                .id(edu.getId())
+                .institutionName(edu.getInstitutionName())
+                .degree(edu.getDegree())
+                .fieldOfStudy(edu.getFieldOfStudy())
+                .grade(edu.getGrade())
+                .startDate(edu.getStartDate())
+                .endDate(edu.getEndDate())
+                .isCurrentlyStudying(edu.getIsCurrentlyStudying())
+                .description(edu.getDescription())
+                .displayOrder(edu.getDisplayOrder())
                 .build();
     }
 }
