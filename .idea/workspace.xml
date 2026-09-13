@@ -5,15 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3398828e-2816-447c-864f-c5531f6b2bda" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/manh/job/dto/response/ApplicationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/manh/job/dto/response/ApplicationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/ApiResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/ApiResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/PersonalInfoResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/PersonalInfoResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddEducationRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddEducationRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddLanguageRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddLanguageRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddProjectRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddProjectRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddResumeSkillRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddResumeSkillRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddWorkExperienceRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/AddWorkExperienceRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/CompanyRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/CompanyRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/CreateResumeRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/CreateResumeRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobCategoryRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobCategoryRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobSearchRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobSearchRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobSkillRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobSkillRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobTagRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/JobTagRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/LoginRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/SignupRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/SignupRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/UpdateUserRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/request/UpdateUserRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ApplicationResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ApplicationResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/AuthResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/AuthResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/CompanyResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/CompanyResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/EducationResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/EducationResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobCategoryResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobCategoryResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobSkillResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobSkillResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobTagResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/JobTagResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/LanguageResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/LanguageResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ProjectResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ProjectResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ResumeResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ResumeResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ResumeSkillResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/ResumeSkillResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/SocialLinkResponse$SocialLinkResponseBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/SocialLinkResponse$SocialLinkResponseBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/SocialLinkResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/SocialLinkResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/UserResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/UserResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/WorkExperienceResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/classes/com/manh/job/dto/response/WorkExperienceResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/job-portal-common-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/job-portal-common-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/mapper/ApplicationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/mapper/ApplicationMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/modal/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/modal/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/service/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/service/ApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/controller/JobController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/controller/JobController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/mapper/JobMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/modal/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/modal/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/JobService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/manh/job/service/impl/JobServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/service/impl/ApplicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-application-service/src/main/java/com/manh/job/service/impl/ApplicationServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,38 +87,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.JobPortalCompanyServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JobPortalJobServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JobPortalResumeServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JobUserServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.JobPortalApplicationServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.JobPortalCompanyServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.JobPortalJobServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.JobPortalResumeServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.JobUserServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/02_java/job&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.JobPortalCompanyServiceApplication.executor": "Run",
+    "Application.JobPortalJobServiceApplication.executor": "Run",
+    "Application.JobPortalResumeServiceApplication.executor": "Run",
+    "Application.JobUserServiceApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Notification.DisplayName-DoNotAsk-WindowsDefender": "Microsoft Defender may affect IDE",
+    "Notification.DoNotAsk-WindowsDefender": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.JobPortalApplicationServiceApplication.executor": "Run",
+    "Spring Boot.JobPortalCompanyServiceApplication.executor": "Run",
+    "Spring Boot.JobPortalJobServiceApplication.executor": "Run",
+    "Spring Boot.JobPortalResumeServiceApplication.executor": "Run",
+    "Spring Boot.JobUserServiceApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/02_java/job",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.manh.job.domain" />

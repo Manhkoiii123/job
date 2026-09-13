@@ -19,12 +19,15 @@ D:\02_java\job\common-lib\src\main\java\com\manh\job\domain\WorkMode.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\ApiResponse.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\CompanySummaryResponse.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\PersonalInfoResponse.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddApplicationNoteRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddEducationRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddLanguageRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddProjectRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddResumeSkillRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\AddWorkExperienceRequest.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\CompanyApplicationFilterRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\CompanyRequest.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\CreateApplicationRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\CreateResumeRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\JobCategoryRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\JobRequest.java
@@ -33,7 +36,10 @@ D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\JobSkillRequest
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\JobTagRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\LoginRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\SignupRequest.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\UpdateApplicationStatusRequest.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\UpdateUserRequest.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\request\WithdrawApplicationRequest.java
+D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\response\ApplicationNoteResponse.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\response\ApplicationResponse.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\response\AuthResponse.java
 D:\02_java\job\common-lib\src\main\java\com\manh\job\dto\response\CompanyResponse.java

@@ -10,6 +10,8 @@ import com.manh.job.dto.response.JobResponse;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.ApplicationMapper;
 import com.manh.job.modal.Application;
+import com.manh.job.modal.ApplicationNote;
+import com.manh.job.repository.ApplicationNoteRepository;
 import com.manh.job.repository.ApplicationRepository;
 import com.manh.job.repository.ApplicationSpecification;
 import com.manh.job.service.ApplicationService;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final ApplicationNoteRepository applicationNoteRepository;
+
     @Override
     public ApplicationResponse createApplication(Long candidateId, CreateApplicationRequest req) throws Exception {
         if(applicationRepository.existsByCandidateIdAndJobId(candidateId,req.getJobId())) {
@@ -154,13 +158,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     public ApplicationResponse buildFullResponse(Application application) {
-        //todo : fetch real data from respective microservice
         JobResponse job = JobResponse.builder().id(application.getJobId()).build();
         CompanyResponse company = CompanyResponse.builder().id(application.getCompanyId()).build();
         UserResponse candidate = UserResponse.builder().id(application.getCandidateId()).build();
-
+        List<ApplicationNote> notes = applicationNoteRepository.findByApplicationId(application.getId());
         return ApplicationMapper.toResponse(
                 application,
+                notes,
                 job,
                 company,
                 candidate

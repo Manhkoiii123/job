@@ -8,6 +8,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,9 +33,7 @@ public class ApplicationResponse {
 
     private Boolean isStarred;
 
-//    private List<ApplicationStatusHistoryResponse> statusHistory;
-//    private List<InterviewResponse> interviews;
-//    private List<ApplicationNoteResponse> notes;
+    private List<ApplicationNoteResponse> notes;
 
     private LocalDateTime withdrawnAt;
     private String withdrawnReason;

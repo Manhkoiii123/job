@@ -7,11 +7,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for job-portal-system" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.48/lombok-1.18.48.jar" />
+        </processorPath>
         <module name="job-portal-common" />
         <module name="job-user-service" />
         <module name="job-portal-resume-service" />
-        <module name="job-portal-company-service" />
         <module name="job-portal-application-service" />
+        <module name="job-portal-company-service" />
         <module name="job-portal-job-service" />
       </profile>
     </annotationProcessing>

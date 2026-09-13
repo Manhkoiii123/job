@@ -55,7 +55,7 @@ public class Application {
     @Column
     private Integer aiScore;
 
-    private AiShortListStatus aiShortListStatus;
+    private AiShortListStatus aiShortListStatus = AiShortListStatus.PENDING_REVIEW;
 
     private LocalDateTime withdrawnAt;
 

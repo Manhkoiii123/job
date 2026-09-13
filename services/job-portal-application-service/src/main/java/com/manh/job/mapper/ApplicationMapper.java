@@ -1,11 +1,12 @@
 package com.manh.job.mapper;
 
+import com.manh.job.domain.ApplicationStatus;
 import com.manh.job.dto.request.CreateApplicationRequest;
-import com.manh.job.dto.response.ApplicationResponse;
-import com.manh.job.dto.response.CompanyResponse;
-import com.manh.job.dto.response.JobResponse;
-import com.manh.job.dto.response.UserResponse;
+import com.manh.job.dto.response.*;
 import com.manh.job.modal.Application;
+import com.manh.job.modal.ApplicationNote;
+
+import java.util.List;
 
 public class ApplicationMapper {
     public static Application toEntity(CreateApplicationRequest req,
@@ -22,10 +23,11 @@ public class ApplicationMapper {
                 .coverLetter(req.getCoverLetter())
                 .expectedSalary(req.getExpectedSalary())
                 .availableFrom(req.getAvailableFrom())
+                .status(ApplicationStatus.PENDING)
                 .build();
     }
     public static ApplicationResponse toResponse(Application application,
-//                                            List<ApplicationNote> notes,
+                                            List<ApplicationNote> notes,
                                             JobResponse job,
                                             CompanyResponse company,
                                             UserResponse candidate
@@ -48,12 +50,20 @@ public class ApplicationMapper {
                 .availableFrom(application.getAvailableFrom())
 
                 .isStarred(application.getIsStarred())
-//          .notes(toNoteResponseList(notes))
+                .notes(notes.stream().map(ApplicationMapper::toNoteResponse).toList())
                 .withdrawnAt(application.getWithdrawnAt())
                 .withdrawnReason(application.getWithdrawnReason())
                 .appliedAt(application.getAppliedAt())
                 .updatedAt(application.getUpdatedAt())
 //          .screening(toScreeningResponse(screening))
+                .build();
+    }
+    public static ApplicationNoteResponse toNoteResponse(ApplicationNote note) {
+        return ApplicationNoteResponse.builder()
+                .id(note.getId())
+                .addedByUserId(note.getAddedByUserId())
+                .content(note.getContent())
+                .createdAt(note.getCreatedAt())
                 .build();
     }
 }
