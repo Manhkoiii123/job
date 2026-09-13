@@ -56,7 +56,7 @@ public class JobMapper {
                 .expiresAt(job.getExpiresAt())
                 .active(job.getActive())
 
-//                .viewCount(job.getViewCount())
+                .viewCount(job.getViewCount())
 //                .applicationCount(job.getApplicationCount())
 
                 .createdAt(job.getCreatedAt())

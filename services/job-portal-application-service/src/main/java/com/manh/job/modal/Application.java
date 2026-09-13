@@ -63,10 +63,11 @@ public class Application {
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime appliedAt;
 
     @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
 }
+

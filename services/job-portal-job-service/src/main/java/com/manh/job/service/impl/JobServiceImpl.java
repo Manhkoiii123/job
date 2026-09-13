@@ -76,6 +76,16 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public void incrementViewCount(Long id) throws Exception {
+        Job job = jobRepository.findById(id).orElseThrow(
+                () -> new Exception("Job not found")
+        );
+        long currentViewCount = job.getViewCount() == null ? 0L : job.getViewCount();
+        job.setViewCount(currentViewCount + 1);
+        jobRepository.save(job);
+    }
+
+    @Override
     public List<JobResponse> getAllJobs(JobSearchRequest request) {
         List<Job> jobs = jobRepository.findAll(JobSpecification.build(request));
         return jobs.stream().map(

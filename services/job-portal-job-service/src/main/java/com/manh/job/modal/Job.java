@@ -102,6 +102,10 @@ public class Job {
 
     private  Boolean active = true;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Long viewCount = 0L;
+
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;

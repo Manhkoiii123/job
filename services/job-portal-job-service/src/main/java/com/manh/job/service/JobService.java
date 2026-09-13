@@ -11,6 +11,8 @@ public interface JobService {
 
     JobResponse getJobById(Long id) throws Exception;
 
+    void incrementViewCount(Long id) throws Exception;
+
     List<JobResponse> getAllJobs(JobSearchRequest req);
 
     List<JobResponse> getJobsByCompany(Long companyId);
