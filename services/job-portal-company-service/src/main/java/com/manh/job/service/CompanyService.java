@@ -15,8 +15,8 @@ public interface CompanyService {
     CompanyResponse getMyCompany(Long ownerId) throws Exception;
     List<CompanyResponse> getAllCompanies(CompanyType companyType, IndustryType industryType, CompanyStatus companyStatus);
     CompanyResponse updateCompany(Long companyId,Long ownerId, CompanyRequest req) throws Exception;
-    CompanyResponse verifyCompany(Long companyId) throws Exception;
+    CompanyResponse verifyCompany(Long companyId, Long adminId) throws Exception;
     void deleteCompany(Long companyId,Long ownerId) throws Exception;
-    CompanyResponse deactivateCompany(Long companyId) throws Exception;
+    CompanyResponse deactivateCompany(Long companyId, Long adminId) throws Exception;
     Company getCompanyEntityById(Long id) throws Exception;
 }

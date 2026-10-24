@@ -56,6 +56,9 @@ public class CompanyServiceImpl implements CompanyService {
                 .industryType(req.getIndustryType())
                 .registrationNumber(req.getRegistrationNumber())
                 .ownerId(ownerId)
+                .status(CompanyStatus.PENDING_VERIFICATION)
+                .isVerified(false)
+                .active(true)
                 .socialLinks(mapSocialLinks(req.getSocialLinks()))
                 .build();
 
@@ -124,6 +127,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyResponse updateCompany(Long companyId, Long ownerId, CompanyRequest req) throws Exception {
         Company company = getCompanyEntityById(companyId);
+        assertOwner(company, ownerId);
         if(!company.getName().equals(req.getName()) && companyRepository.existsByName(req.getName())) {
             throw new Exception("Company already exists. Please choose a different name.");
         }
@@ -151,7 +155,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public CompanyResponse verifyCompany(Long companyId) throws Exception {
+    public CompanyResponse verifyCompany(Long companyId, Long adminId) throws Exception {
         Company company = getCompanyEntityById(companyId);
         company.setStatus(CompanyStatus.ACTIVE);
         company.setVerified(true);
@@ -175,7 +179,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public CompanyResponse deactivateCompany(Long companyId) throws Exception {
+    public CompanyResponse deactivateCompany(Long companyId, Long adminId) throws Exception {
         Company company = getCompanyEntityById(companyId);
         company.setStatus(CompanyStatus.SUSPENDED);
         company.setVerified(false);

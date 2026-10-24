@@ -1,10 +1,10 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.dto.request.AddWorkExperienceRequest;
+import com.manh.job.dto.response.WorkExperienceResponse;
 import com.manh.job.mapper.WorkExperienceMapper;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.WorkExperience;
-import com.manh.job.dto.request.AddWorkExperienceRequest;
-import com.manh.job.dto.response.WorkExperienceResponse;
 import com.manh.job.repository.WorkExperienceRepository;
 import com.manh.job.service.ResumeService;
 import com.manh.job.service.WorkExperienceService;
@@ -20,7 +20,11 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
     private final WorkExperienceRepository workExperienceRepository;
 
     @Override
-    public WorkExperienceResponse addWorkExperience(Long resumeId, Long candidateId, AddWorkExperienceRequest req) throws Exception {
+    public WorkExperienceResponse addWorkExperience(
+            Long resumeId,
+            Long candidateId,
+            AddWorkExperienceRequest req
+    ) throws Exception {
         Resume resume = resumeService.getResumeEntity(resumeId);
         assertOwner(resume, candidateId);
         WorkExperience workExperience = WorkExperience.builder()
@@ -37,22 +41,29 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
                 .technologies(req.getTechnologies() != null ? req.getTechnologies() : List.of())
                 .displayOrder(req.getDisplayOrder() != null ? req.getDisplayOrder() : 0)
                 .build();
-        WorkExperience saved = workExperienceRepository.save(workExperience);
-        return WorkExperienceMapper.toWorkExperienceResponse(saved);
+        return WorkExperienceMapper.toWorkExperienceResponse(workExperienceRepository.save(workExperience));
     }
 
-
-
     @Override
-    public List<WorkExperienceResponse> getWorkExperiences(Long resumeId) {
+    public List<WorkExperienceResponse> getWorkExperiences(Long resumeId, Long candidateId) throws Exception {
+        Resume resume = resumeService.getResumeEntity(resumeId);
+        assertOwner(resume, candidateId);
         return workExperienceRepository.findByResume_IdOrderByDisplayOrderAsc(resumeId)
-                .stream().map(WorkExperienceMapper::toWorkExperienceResponse).toList();
+                .stream()
+                .map(WorkExperienceMapper::toWorkExperienceResponse)
+                .toList();
     }
 
     @Override
-    public WorkExperienceResponse updateWorkExperience(Long resumeId, Long candidateId, Long workExperienceId, AddWorkExperienceRequest req) throws Exception {
+    public WorkExperienceResponse updateWorkExperience(
+            Long resumeId,
+            Long candidateId,
+            Long workExperienceId,
+            AddWorkExperienceRequest req
+    ) throws Exception {
         WorkExperience exp = getWorkExperienceEntity(workExperienceId);
-        assertOwner(exp.getResume(),candidateId);
+        assertBelongsToResume(exp, resumeId);
+        assertOwner(exp.getResume(), candidateId);
         exp.setCompanyName(req.getCompanyName());
         exp.setCompanyLogoUrl(req.getCompanyLogoUrl());
         exp.setJobTitle(req.getJobTitle());
@@ -63,19 +74,20 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
         exp.setIsCurrentJob(Boolean.TRUE.equals(req.getIsCurrentJob()));
         exp.setDescription(req.getDescription());
 
-        if (req.getTechnologies() != null)
+        if (req.getTechnologies() != null) {
             exp.setTechnologies(req.getTechnologies());
-
-        if (req.getDisplayOrder() != null)
+        }
+        if (req.getDisplayOrder() != null) {
             exp.setDisplayOrder(req.getDisplayOrder());
-        WorkExperience workExperience = workExperienceRepository.save(exp);
-        return WorkExperienceMapper.toWorkExperienceResponse(workExperience);
+        }
+        return WorkExperienceMapper.toWorkExperienceResponse(workExperienceRepository.save(exp));
     }
 
     @Override
-    public void deleteWorkExperience(Long resumeId, Long workExperienceId,Long candidateId) throws Exception {
+    public void deleteWorkExperience(Long resumeId, Long workExperienceId, Long candidateId) throws Exception {
         WorkExperience exp = getWorkExperienceEntity(workExperienceId);
-        assertOwner(exp.getResume(),candidateId);
+        assertBelongsToResume(exp, resumeId);
+        assertOwner(exp.getResume(), candidateId);
         workExperienceRepository.delete(exp);
     }
 
@@ -86,10 +98,15 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
         );
     }
 
-    private void assertOwner(Resume resume, Long candidateId) throws Exception {
-        if(!resume.getCandidateId().equals(candidateId)) {
-            throw new Exception("Resume not found");
+    private void assertBelongsToResume(WorkExperience exp, Long resumeId) throws Exception {
+        if (!exp.getResume().getId().equals(resumeId)) {
+            throw new Exception("Work experience not found");
         }
     }
 
+    private void assertOwner(Resume resume, Long candidateId) throws Exception {
+        if (!resume.getCandidateId().equals(candidateId)) {
+            throw new Exception("Resume not found");
+        }
+    }
 }

@@ -41,7 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponse> getAllProjects(Long resumeId) {
+    public List<ProjectResponse> getAllProjects(Long resumeId, Long candidateId) throws Exception {
+        Resume resume = resumeService.getResumeEntity(resumeId);
+        assertOwner(resume, candidateId);
         return projectRepository.findByResume_IdOrderByDisplayOrderAsc(resumeId)
                 .stream().map(ResumeMapper::toProjectResponse).toList();
     }

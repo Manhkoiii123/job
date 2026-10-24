@@ -26,7 +26,7 @@ public interface CompanyRepository extends JpaRepository<Company,Long> {
     )
     List<Company> findByFilters(
             @Param("companyType") CompanyType companyType,
-            @Param("industry") IndustryType industryType,
+            @Param("industryType") IndustryType industryType,
             @Param("status") CompanyStatus companyStatus
     );
 }

@@ -11,6 +11,7 @@ com\manh\job\dto\response\AuthResponse.class
 com\manh\job\dto\response\CompanyResponse$CompanyResponseBuilder.class
 com\manh\job\domain\CompanyStatus.class
 com\manh\job\domain\SocialPlatform.class
+com\manh\job\dto\request\SavedJobSearchRequest$SavedJobSearchRequestBuilder.class
 com\manh\job\dto\response\ApplicationNoteResponse.class
 com\manh\job\dto\CompanySummaryResponse.class
 com\manh\job\dto\request\AddEducationRequest.class
@@ -24,11 +25,14 @@ com\manh\job\domain\CompanyType.class
 com\manh\job\domain\SkillCategory.class
 com\manh\job\dto\request\LoginRequest.class
 com\manh\job\dto\response\JobResponse$JobResponseBuilder.class
+com\manh\job\dto\request\UpdateSavedJobNotesRequest$UpdateSavedJobNotesRequestBuilder.class
+com\manh\job\dto\request\SavedJobSearchRequest.class
 com\manh\job\dto\response\LanguageResponse$LanguageResponseBuilder.class
 com\manh\job\dto\response\SocialLinkResponse.class
 com\manh\job\dto\request\UpdateApplicationStatusRequest.class
 com\manh\job\dto\request\CompanyRequest$CompanyRequestBuilder.class
 com\manh\job\dto\response\ResumeResponse$ResumeResponseBuilder.class
+com\manh\job\dto\request\UpdateSavedJobNotesRequest.class
 com\manh\job\dto\response\EducationResponse.class
 com\manh\job\dto\response\UserResponse$UserResponseBuilder.class
 com\manh\job\dto\request\CompanyRequest.class
@@ -49,8 +53,10 @@ com\manh\job\dto\request\JobSkillRequest.class
 com\manh\job\dto\request\AddApplicationNoteRequest.class
 com\manh\job\dto\response\CompanyResponse.class
 com\manh\job\dto\response\JobCategoryResponse.class
+com\manh\job\dto\request\SaveJobRequest$SaveJobRequestBuilder.class
 com\manh\job\dto\response\ResumeResponse.class
 com\manh\job\domain\ExperienceLevel.class
+com\manh\job\dto\response\SavedJobResponse.class
 com\manh\job\dto\request\WithdrawApplicationRequest.class
 com\manh\job\domain\CompanySize.class
 com\manh\job\domain\JobType.class
@@ -60,6 +66,7 @@ com\manh\job\dto\response\JobTagResponse.class
 com\manh\job\dto\response\LanguageResponse.class
 com\manh\job\domain\UserRole.class
 com\manh\job\dto\response\JobResponse.class
+com\manh\job\dto\request\SaveJobRequest.class
 com\manh\job\dto\response\JobTagResponse$JobTagResponseBuilder.class
 com\manh\job\dto\request\JobCategoryRequest$JobCategoryRequestBuilder.class
 com\manh\job\dto\response\WorkExperienceResponse$WorkExperienceResponseBuilder.class
@@ -75,6 +82,7 @@ com\manh\job\dto\request\SignupRequest.class
 com\manh\job\dto\response\ApplicationNoteResponse$ApplicationNoteResponseBuilder.class
 com\manh\job\dto\request\AddResumeSkillRequest$AddResumeSkillRequestBuilder.class
 com\manh\job\domain\ResumeVisibility.class
+com\manh\job\dto\response\SavedJobResponse$SavedJobResponseBuilder.class
 com\manh\job\dto\response\JobCategoryResponse$JobCategoryResponseBuilder.class
 com\manh\job\dto\request\AddProjectRequest$AddProjectRequestBuilder.class
 com\manh\job\dto\request\JobCategoryRequest.class

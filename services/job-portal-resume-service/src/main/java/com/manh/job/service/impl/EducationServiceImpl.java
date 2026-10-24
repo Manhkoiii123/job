@@ -1,10 +1,10 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.dto.request.AddEducationRequest;
+import com.manh.job.dto.response.EducationResponse;
 import com.manh.job.mapper.ResumeMapper;
 import com.manh.job.modal.Education;
 import com.manh.job.modal.Resume;
-import com.manh.job.dto.request.AddEducationRequest;
-import com.manh.job.dto.response.EducationResponse;
 import com.manh.job.repository.EducationRepository;
 import com.manh.job.service.EducationService;
 import com.manh.job.service.ResumeService;
@@ -22,9 +22,8 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public EducationResponse addEducation(Long resumeId, Long candidateId, AddEducationRequest req) throws Exception {
-
         Resume resume = resumeService.getResumeEntity(resumeId);
-        assertOwner(resume,candidateId);
+        assertOwner(resume, candidateId);
 
         Education education = Education.builder()
                 .resume(resume)
@@ -38,22 +37,30 @@ public class EducationServiceImpl implements EducationService {
                 .description(req.getDescription())
                 .displayOrder(req.getDisplayOrder() != null ? req.getDisplayOrder() : 0)
                 .build();
-        Education saved = educationRepository.save(education);
-        return ResumeMapper.toEducationResponse(saved);
+        return ResumeMapper.toEducationResponse(educationRepository.save(education));
     }
 
     @Override
-    public List<EducationResponse> getEducations(Long resumeId) {
+    public List<EducationResponse> getEducations(Long resumeId, Long candidateId) throws Exception {
+        Resume resume = resumeService.getResumeEntity(resumeId);
+        assertOwner(resume, candidateId);
         return educationRepository.findByResume_IdOrderByDisplayOrderAsc(resumeId)
-                .stream().map(ResumeMapper::toEducationResponse).toList();
+                .stream()
+                .map(ResumeMapper::toEducationResponse)
+                .toList();
     }
 
     @Override
-    public EducationResponse updateEducation(Long educationId, Long resumeId, Long candidateId, AddEducationRequest req)
-            throws Exception {
+    public EducationResponse updateEducation(
+            Long educationId,
+            Long resumeId,
+            Long candidateId,
+            AddEducationRequest req
+    ) throws Exception {
         Education education = educationRepository.findById(educationId).orElseThrow(
                 () -> new Exception("Education not found")
         );
+        assertBelongsToResume(education, resumeId);
         assertOwner(education.getResume(), candidateId);
 
         education.setInstitutionName(req.getInstitutionName());
@@ -76,11 +83,19 @@ public class EducationServiceImpl implements EducationService {
         Education education = educationRepository.findById(educationId).orElseThrow(
                 () -> new Exception("Education not found")
         );
+        assertBelongsToResume(education, resumeId);
         assertOwner(education.getResume(), candidateId);
         educationRepository.delete(education);
     }
+
+    private void assertBelongsToResume(Education education, Long resumeId) throws Exception {
+        if (!education.getResume().getId().equals(resumeId)) {
+            throw new Exception("Education not found");
+        }
+    }
+
     private void assertOwner(Resume resume, Long candidateId) throws Exception {
-        if(!resume.getCandidateId().equals(candidateId)) {
+        if (!resume.getCandidateId().equals(candidateId)) {
             throw new Exception("Not found");
         }
     }

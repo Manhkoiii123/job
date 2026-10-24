@@ -38,9 +38,10 @@ public class LanguageController {
 
     @GetMapping
     public ResponseEntity<List<LanguageResponse>> getLanguages(
-            @PathVariable Long resumeId
-    ) {
-        return ResponseEntity.ok(languageService.getLanguages(resumeId));
+            @PathVariable Long resumeId,
+            @RequestHeader("X-User-Id") Long candidateId
+    ) throws Exception {
+        return ResponseEntity.ok(languageService.getLanguages(resumeId, candidateId));
     }
 
     @PutMapping("/{languageId}")

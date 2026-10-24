@@ -7,6 +7,7 @@ import com.manh.job.dto.ApiResponse;
 import com.manh.job.dto.request.CompanyRequest;
 import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.service.CompanyService;
+import com.manh.job.util.AdminGuard;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,9 @@ import java.util.List;
 @RequestMapping("/api/companies")
 @RequiredArgsConstructor
 public class CompanyController {
+
     private final CompanyService companyService;
+    private final AdminGuard adminGuard;
 
     @PostMapping
     public ResponseEntity<CompanyResponse> createCompany(
@@ -31,19 +34,16 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompanyById(
-            @PathVariable Long id
-    ) throws Exception {
-        return ResponseEntity.ok()
-                .body(companyService.getCompanyById(id));
+    public ResponseEntity<CompanyResponse> getCompanyById(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(companyService.getCompanyById(id));
     }
 
-        @GetMapping("/my")
-        public ResponseEntity<CompanyResponse> getMyCompany(
-                        @RequestHeader("X-User-Id") Long ownerId
-        ) throws Exception {
-                return ResponseEntity.ok(companyService.getMyCompany(ownerId));
-        }
+    @GetMapping("/my")
+    public ResponseEntity<CompanyResponse> getMyCompany(
+            @RequestHeader("X-User-Id") Long ownerId
+    ) throws Exception {
+        return ResponseEntity.ok(companyService.getMyCompany(ownerId));
+    }
 
     @GetMapping
     public ResponseEntity<List<CompanyResponse>> getAllCompanies(
@@ -66,23 +66,27 @@ public class CompanyController {
 
     @PatchMapping("/{id}/verify")
     public ResponseEntity<CompanyResponse> verifyCompany(
-            @PathVariable long id
+            @PathVariable long id,
+            @RequestHeader("X-User-Id") Long adminId
     ) throws Exception {
-        return ResponseEntity.ok(companyService.verifyCompany(id));
+        adminGuard.assertAdmin(adminId);
+        return ResponseEntity.ok(companyService.verifyCompany(id, adminId));
     }
 
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<CompanyResponse> deactivateCompany(
-            @PathVariable long id
+            @PathVariable long id,
+            @RequestHeader("X-User-Id") Long adminId
     ) throws Exception {
-        return ResponseEntity.ok(companyService.deactivateCompany(id));
+        adminGuard.assertAdmin(adminId);
+        return ResponseEntity.ok(companyService.deactivateCompany(id, adminId));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteCompany(
             @PathVariable Long id,
-            @RequestHeader("X-User-Id") Long ownerId)
-            throws Exception {
+            @RequestHeader("X-User-Id") Long ownerId
+    ) throws Exception {
         companyService.deleteCompany(id, ownerId);
         return ResponseEntity.ok(new ApiResponse("Company deleted successfully", true));
     }

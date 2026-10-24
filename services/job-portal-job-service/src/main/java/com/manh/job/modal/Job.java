@@ -114,12 +114,8 @@ public class Job {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    @UpdateTimestamp
     private LocalDateTime publishedAt;
 
-    @Column(nullable = false)
-    @UpdateTimestamp
     private LocalDateTime closedAt;
 
 

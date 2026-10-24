@@ -1,6 +1,8 @@
 server:
   port: 5003
 services:
+  user:
+    url: http://localhost:5001
   company:
     url: http://localhost:5002
 spring:
@@ -11,12 +13,12 @@ spring:
     username: postgres
     password: 123456789
     driver-class-name: org.postgresql.Driver
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
       hibernate:
-        ddl-auto: update
-      show-sql: false
-      open-in-view: false
-      properties:
-        hibernate:
-          format_sql: true
-          dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect

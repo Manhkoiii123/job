@@ -1,15 +1,15 @@
 package com.manh.job.service;
 
 import com.manh.job.dto.request.JobRequest;
-import com.manh.job.dto.response.JobResponse;
 import com.manh.job.dto.request.JobSearchRequest;
+import com.manh.job.dto.response.JobResponse;
 
 import java.util.List;
 
 public interface JobService {
     JobResponse createJob(Long employerId, JobRequest req) throws Exception;
 
-    JobResponse getJobById(Long id) throws Exception;
+    JobResponse getJobById(Long id, Long viewerId) throws Exception;
 
     void incrementViewCount(Long id) throws Exception;
 
@@ -26,6 +26,4 @@ public interface JobService {
     void deleteJob(Long jobId, Long employerId) throws Exception;
 
     List<JobResponse> getAllJobsAdmin();
-
-
 }

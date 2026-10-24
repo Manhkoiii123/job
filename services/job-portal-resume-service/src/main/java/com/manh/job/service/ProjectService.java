@@ -10,7 +10,7 @@ public interface ProjectService {
             Long resumeId, Long candidateId, AddProjectRequest req
         ) throws Exception;
 
-    List<ProjectResponse> getAllProjects(Long resumeId);
+    List<ProjectResponse> getAllProjects(Long resumeId, Long candidateId) throws Exception;
 
     ProjectResponse updateProject(Long projectId, Long resumeId,
                                   Long candidateId,

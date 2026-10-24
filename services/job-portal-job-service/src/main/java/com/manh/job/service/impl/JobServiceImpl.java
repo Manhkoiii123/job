@@ -59,6 +59,8 @@ public class JobServiceImpl implements JobService {
                 .openings(req.getOpenings() != null ? req.getOpenings() : 1)
                 .applicationDeadline(req.getApplicationDeadline())
                 .expiresAt(req.getExpiresAt())
+                .status(JobStatus.DRAFT)
+                .active(false)
                 .build();
 
         Job savedJob = jobRepository.save(job);
@@ -68,10 +70,11 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobResponse getJobById(Long id) throws Exception {
+    public JobResponse getJobById(Long id, Long viewerId) throws Exception {
         Job job = jobRepository.findById(id).orElseThrow(
                 () -> new Exception("Job not found")
         );
+        assertCanViewJob(job, viewerId);
         return convertToResponse(job);
     }
 
@@ -80,6 +83,9 @@ public class JobServiceImpl implements JobService {
         Job job = jobRepository.findById(id).orElseThrow(
                 () -> new Exception("Job not found")
         );
+        if (job.getStatus() != JobStatus.OPEN || !Boolean.TRUE.equals(job.getActive())) {
+            return;
+        }
         long currentViewCount = job.getViewCount() == null ? 0L : job.getViewCount();
         job.setViewCount(currentViewCount + 1);
         jobRepository.save(job);
@@ -95,10 +101,20 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobResponse> getJobsByCompany(Long companyId) {
-        List<Job> jobs = jobRepository.findByCompanyId(companyId);
-        return jobs.stream().map(
-                this::convertToResponse
-        ).collect(Collectors.toList());
+        return jobRepository.findByCompanyId(companyId).stream()
+                .filter(job -> job.getStatus() == JobStatus.OPEN && Boolean.TRUE.equals(job.getActive()))
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    private void assertCanViewJob(Job job, Long viewerId) throws Exception {
+        if (job.getStatus() != JobStatus.DRAFT) {
+            return;
+        }
+        if (viewerId != null && viewerId.equals(job.getEmployerId())) {
+            return;
+        }
+        throw new Exception("Job not found");
     }
 
     @Override

@@ -131,10 +131,13 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public Resume getResumeEntity(Long resumeId) throws Exception {
-            return resumeRepository.findById(resumeId).orElseThrow(
-                    () -> new Exception("Resume not found")
-            );
-
+        Resume resume = resumeRepository.findById(resumeId).orElseThrow(
+                () -> new Exception("Resume not found")
+        );
+        if (Boolean.FALSE.equals(resume.getIsActive())) {
+            throw new Exception("Resume not found");
+        }
+        return resume;
     }
 
     private ResumeResponse buildFullResponse(Resume resume) {

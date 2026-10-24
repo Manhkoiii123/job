@@ -8,11 +8,14 @@ import java.util.List;
 public interface EducationService {
     EducationResponse addEducation(Long resumeId, Long candidateId, AddEducationRequest req) throws Exception;
 
-    List<EducationResponse> getEducations(Long resumeId);
+    List<EducationResponse> getEducations(Long resumeId, Long candidateId) throws Exception;
 
-    EducationResponse updateEducation(Long educationId,
-                                      Long resumeId, Long candidateId,
-                                      AddEducationRequest req) throws Exception;
+    EducationResponse updateEducation(
+            Long educationId,
+            Long resumeId,
+            Long candidateId,
+            AddEducationRequest req
+    ) throws Exception;
 
     void deleteEducation(Long educationId, Long resumeId, Long candidateId) throws Exception;
 }

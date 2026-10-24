@@ -1,10 +1,11 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.domain.UserRole;
 import com.manh.job.domain.UserStatus;
+import com.manh.job.dto.request.UpdateUserRequest;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.UserMapper;
 import com.manh.job.modal.User;
-import com.manh.job.dto.request.UpdateUserRequest;
 import com.manh.job.repository.UserRepository;
 import com.manh.job.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,27 +35,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() throws Exception {
+    public List<User> getUsers(Long adminId) throws Exception {
+        assertAdmin(adminId);
         return userRepository.findAll();
     }
 
     @Override
-    public UserResponse updateProfile(String email, UpdateUserRequest req) throws Exception {
-       User user = getUserByEmail(email);
-       if(req.getFullName() != null) {
-           user.setFullName(req.getFullName());
-       }
-       if(req.getPhone() != null) {
-           user.setPhone(req.getPhone());
-       }
-       if(req.getProfileImage() != null) {
-           user.setProfileImage(req.getProfileImage());
-       }
-       return UserMapper.toDTO(userRepository.save(user));
+    public UserResponse updateProfile(Long userId, UpdateUserRequest req) throws Exception {
+        User user = getUserById(userId);
+        if (req.getFullName() != null) {
+            user.setFullName(req.getFullName());
+        }
+        if (req.getPhone() != null) {
+            user.setPhone(req.getPhone());
+        }
+        if (req.getProfileImage() != null) {
+            user.setProfileImage(req.getProfileImage());
+        }
+        return UserMapper.toDTO(userRepository.save(user));
     }
 
     @Override
-    public UserResponse suspendUser(Long id) throws Exception {
+    public UserResponse suspendUser(Long id, Long adminId) throws Exception {
+        assertAdmin(adminId);
         User user = getUserById(id);
         user.setStatus(UserStatus.SUSPENDED);
         user.setSuspendedAt(LocalDateTime.now());
@@ -62,7 +65,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse activatedUser(Long id) throws Exception {
+    public UserResponse activatedUser(Long id, Long adminId) throws Exception {
+        assertAdmin(adminId);
         User user = getUserById(id);
         user.setStatus(UserStatus.ACTIVE);
         user.setSuspendedAt(null);
@@ -70,10 +74,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse deleteUser(Long id) throws Exception {
+    public UserResponse deleteUser(Long id, Long adminId) throws Exception {
+        assertAdmin(adminId);
         User user = getUserById(id);
         user.setStatus(UserStatus.DELETED);
         user.setDeletedAt(LocalDateTime.now());
         return UserMapper.toDTO(userRepository.save(user));
+    }
+
+    private void assertAdmin(Long adminId) throws Exception {
+        User admin = getUserById(adminId);
+        if (admin.getRole() != UserRole.ROLE_ADMIN) {
+            throw new Exception("Admin access required");
+        }
+        if (admin.getStatus() != UserStatus.ACTIVE) {
+            throw new Exception("Admin account is not active");
+        }
     }
 }

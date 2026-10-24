@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,75 +34,77 @@ public class ApplicationController {
 
     @PostMapping
     public ResponseEntity<ApplicationResponse> createApplication(
-	    @RequestHeader("X-User-Id") Long candidateId,
-	    @RequestBody @Valid CreateApplicationRequest req
+            @RequestHeader("X-User-Id") Long candidateId,
+            @RequestBody @Valid CreateApplicationRequest req
     ) throws Exception {
-	return ResponseEntity.status(HttpStatus.CREATED)
-		.body(applicationService.createApplication(candidateId, req));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(applicationService.createApplication(candidateId, req));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApplicationResponse> getApplicationById(
-	    @PathVariable Long id
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long userId
     ) throws Exception {
-	return ResponseEntity.ok(applicationService.getApplicationById(id));
+        return ResponseEntity.ok(applicationService.getApplicationById(id, userId));
     }
 
     @GetMapping("/my")
     public ResponseEntity<List<ApplicationResponse>> getMyApplications(
-	    @RequestHeader("X-User-Id") Long candidateId
+            @RequestHeader("X-User-Id") Long candidateId
     ) {
-	return ResponseEntity.ok(applicationService.getMyApplications(candidateId));
+        return ResponseEntity.ok(applicationService.getMyApplications(candidateId));
     }
 
     @GetMapping("/job/{jobId}")
     public ResponseEntity<List<ApplicationResponse>> getApplicationsForJob(
-	    @PathVariable Long jobId
-    ) {
-	return ResponseEntity.ok(applicationService.getApplicationsForJob(jobId));
+            @PathVariable Long jobId,
+            @RequestHeader("X-User-Id") Long employerId
+    ) throws Exception {
+        return ResponseEntity.ok(applicationService.getApplicationsForJob(jobId, employerId));
     }
 
     @GetMapping("/company")
     public ResponseEntity<List<ApplicationResponse>> getApplicationsForCompany(
-	    @RequestHeader("X-User-Id") Long employerId,
-	    @ModelAttribute CompanyApplicationFilterRequest request
-    ) {
-	return ResponseEntity.ok(
-		applicationService.getApplicationsForCompany(employerId, request));
+            @RequestHeader("X-User-Id") Long employerId,
+            @ModelAttribute CompanyApplicationFilterRequest request
+    ) throws Exception {
+        return ResponseEntity.ok(
+                applicationService.getApplicationsForCompany(employerId, request));
     }
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<ApplicationResponse> updateStatus(
-	    @PathVariable Long id,
-	    @RequestHeader("X-User-Id") Long employerId,
-        @RequestBody @Valid UpdateApplicationStatusRequest req
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId,
+            @RequestBody @Valid UpdateApplicationStatusRequest req
     ) throws Exception {
-	return ResponseEntity.ok(applicationService.updateStatus(id, employerId, req.getStatus()));
+        return ResponseEntity.ok(applicationService.updateStatus(id, employerId, req.getStatus()));
     }
 
     @PatchMapping("/{id}/withdraw")
     public ResponseEntity<ApplicationResponse> withdrawApplication(
-	    @PathVariable Long id,
-	    @RequestHeader("X-User-Id") Long candidateId,
-	    @RequestBody @Valid WithdrawApplicationRequest req
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long candidateId,
+            @RequestBody @Valid WithdrawApplicationRequest req
     ) throws Exception {
-	return ResponseEntity.ok(applicationService.withDraw(id, candidateId, req));
+        return ResponseEntity.ok(applicationService.withDraw(id, candidateId, req));
     }
 
     @PatchMapping("/{id}/star")
     public ResponseEntity<ApplicationResponse> toggleStar(
-	    @PathVariable Long id,
-	    @RequestHeader("X-User-Id") Long employerId
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long employerId
     ) throws Exception {
-	return ResponseEntity.ok(applicationService.toggleStar(id, employerId));
+        return ResponseEntity.ok(applicationService.toggleStar(id, employerId));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteApplication(
-	    @PathVariable Long id,
-	    @RequestHeader("X-User-Id") Long candidateId
+            @PathVariable Long id,
+            @RequestHeader("X-User-Id") Long candidateId
     ) throws Exception {
-	applicationService.deleteApplication(id);
-	return ResponseEntity.ok(new ApiResponse("Application deleted successfully", true));
+        applicationService.deleteApplication(id, candidateId);
+        return ResponseEntity.ok(new ApiResponse("Application deleted successfully", true));
     }
 }

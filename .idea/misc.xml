@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/services/job-portal-job-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/job-portal-resume-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/job-portal-application-service/pom.xml" />
+        <option value="$PROJECT_DIR$/services/job-portal-preferences/pom.xml" />
       </list>
     </option>
   </component>

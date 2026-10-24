@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface ResumeSkillService {
     ResumeSkillResponse addSkill(Long resumeId, Long candidateId, AddResumeSkillRequest req) throws Exception;
-    List<ResumeSkillResponse> getSkills(Long resumeId);
+
+    List<ResumeSkillResponse> getSkills(Long resumeId, Long candidateId) throws Exception;
 
     ResumeSkillResponse updateSkill(
             Long skillId, Long resumeId, Long candidateId, AddResumeSkillRequest req

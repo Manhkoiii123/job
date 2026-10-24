@@ -1,8 +1,10 @@
 package com.manh.job.specification;
 
 import com.manh.job.domain.JobStatus;
-import com.manh.job.modal.Job;
 import com.manh.job.dto.request.JobSearchRequest;
+import com.manh.job.modal.Job;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,6 +23,14 @@ public class JobSpecification {
 
             JobStatus status = req.getStatus() != null ? req.getStatus() : JobStatus.OPEN;
             predicates.add(cb.equal(root.get("status"), status));
+
+            if (req.getKeyword() != null && !req.getKeyword().isBlank()) {
+                String pattern = "%" + req.getKeyword().trim().toLowerCase() + "%";
+                predicates.add(cb.or(
+                        cb.like(cb.lower(root.get("title")), pattern),
+                        cb.like(cb.lower(root.get("description")), pattern)
+                ));
+            }
 
             if (req.getJobType() != null) {
                 predicates.add(cb.equal(root.get("jobType"), req.getJobType()));
@@ -64,7 +74,19 @@ public class JobSpecification {
             if (req.getMaxOpenings() != null) {
                 predicates.add(cb.lessThanOrEqualTo(root.get("openings"), req.getMaxOpenings()));
             }
-//            TODO filter for tag skills
+
+            if (req.getSkillIds() != null && !req.getSkillIds().isEmpty()) {
+                Join<Object, Object> skillsJoin = root.join("skills", JoinType.INNER);
+                predicates.add(skillsJoin.get("id").in(req.getSkillIds()));
+                query.distinct(true);
+            }
+
+            if (req.getTagIds() != null && !req.getTagIds().isEmpty()) {
+                Join<Object, Object> tagsJoin = root.join("tags", JoinType.INNER);
+                predicates.add(tagsJoin.get("id").in(req.getTagIds()));
+                query.distinct(true);
+            }
+
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

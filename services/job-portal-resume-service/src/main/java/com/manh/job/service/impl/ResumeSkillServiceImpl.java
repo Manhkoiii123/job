@@ -1,10 +1,10 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.dto.request.AddResumeSkillRequest;
+import com.manh.job.dto.response.ResumeSkillResponse;
 import com.manh.job.mapper.ResumeMapper;
 import com.manh.job.modal.Resume;
 import com.manh.job.modal.ResumeSkill;
-import com.manh.job.dto.request.AddResumeSkillRequest;
-import com.manh.job.dto.response.ResumeSkillResponse;
 import com.manh.job.repository.ResumeSkillRepository;
 import com.manh.job.service.ResumeService;
 import com.manh.job.service.ResumeSkillService;
@@ -22,7 +22,7 @@ public class ResumeSkillServiceImpl implements ResumeSkillService {
     @Override
     public ResumeSkillResponse addSkill(Long resumeId, Long candidateId, AddResumeSkillRequest req) throws Exception {
         Resume resume = resumeService.getResumeEntity(resumeId);
-        assertOwner(resume,candidateId);
+        assertOwner(resume, candidateId);
         ResumeSkill skill = ResumeSkill.builder()
                 .resume(resume)
                 .skillName(req.getSkillName())
@@ -30,29 +30,38 @@ public class ResumeSkillServiceImpl implements ResumeSkillService {
                 .yearsOfExperience(req.getYearsOfExperience())
                 .displayOrder(req.getDisplayOrder() != null ? req.getDisplayOrder() : 0)
                 .build();
-        ResumeSkill saved = resumeSkillRepository.save(skill);
-        return ResumeMapper.toSkillResponse(saved);
+        return ResumeMapper.toSkillResponse(resumeSkillRepository.save(skill));
     }
 
-
-
     @Override
-    public List<ResumeSkillResponse> getSkills(Long resumeId) {
+    public List<ResumeSkillResponse> getSkills(Long resumeId, Long candidateId) throws Exception {
+        Resume resume = resumeService.getResumeEntity(resumeId);
+        assertOwner(resume, candidateId);
         return resumeSkillRepository.findByResume_IdOrderByDisplayOrderAsc(resumeId)
-                .stream().map(ResumeMapper::toSkillResponse).toList();
+                .stream()
+                .map(ResumeMapper::toSkillResponse)
+                .toList();
     }
 
     @Override
-    public ResumeSkillResponse updateSkill(Long skillId, Long resumeId, Long candidateId, AddResumeSkillRequest req) throws Exception {
+    public ResumeSkillResponse updateSkill(
+            Long skillId,
+            Long resumeId,
+            Long candidateId,
+            AddResumeSkillRequest req
+    ) throws Exception {
         ResumeSkill skill = resumeSkillRepository.findById(skillId).orElseThrow(
                 () -> new Exception("Skill not found")
         );
+        assertBelongsToResume(skill, resumeId);
         assertOwner(skill.getResume(), candidateId);
 
         skill.setSkillName(req.getSkillName());
         skill.setProficiencyLevel(req.getProficiencyLevel());
         skill.setYearsOfExperience(req.getYearsOfExperience());
-        if (req.getDisplayOrder() != null) skill.setDisplayOrder(req.getDisplayOrder());
+        if (req.getDisplayOrder() != null) {
+            skill.setDisplayOrder(req.getDisplayOrder());
+        }
 
         return ResumeMapper.toSkillResponse(resumeSkillRepository.save(skill));
     }
@@ -62,12 +71,19 @@ public class ResumeSkillServiceImpl implements ResumeSkillService {
         ResumeSkill skill = resumeSkillRepository.findById(skillId).orElseThrow(
                 () -> new Exception("Skill not found")
         );
+        assertBelongsToResume(skill, resumeId);
         assertOwner(skill.getResume(), candidateId);
         resumeSkillRepository.delete(skill);
     }
 
+    private void assertBelongsToResume(ResumeSkill skill, Long resumeId) throws Exception {
+        if (!skill.getResume().getId().equals(resumeId)) {
+            throw new Exception("Skill not found");
+        }
+    }
+
     private void assertOwner(Resume resume, Long candidateId) throws Exception {
-        if(!resume.getCandidateId().equals(candidateId)) {
+        if (!resume.getCandidateId().equals(candidateId)) {
             throw new Exception("Not found");
         }
     }

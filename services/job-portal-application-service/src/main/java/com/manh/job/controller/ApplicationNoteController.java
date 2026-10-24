@@ -40,7 +40,7 @@ public class ApplicationNoteController {
     public ResponseEntity<List<ApplicationNoteResponse>> getNotesByApplication(
 	    @PathVariable Long applicationId,
 	    @RequestHeader("X-User-Id") Long employerId
-    ) {
+    ) throws Exception {
 	return ResponseEntity.ok(
 		applicationNoteService.getNotesByApplication(applicationId, employerId));
     }

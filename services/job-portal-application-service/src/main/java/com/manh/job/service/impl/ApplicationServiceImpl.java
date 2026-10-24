@@ -1,12 +1,18 @@
 package com.manh.job.service.impl;
 
+import com.manh.job.client.CompanyClient;
+import com.manh.job.client.JobClient;
+import com.manh.job.client.ResumeClient;
+import com.manh.job.client.UserClient;
 import com.manh.job.domain.ApplicationStatus;
+import com.manh.job.domain.JobStatus;
 import com.manh.job.dto.request.CompanyApplicationFilterRequest;
 import com.manh.job.dto.request.CreateApplicationRequest;
 import com.manh.job.dto.request.WithdrawApplicationRequest;
 import com.manh.job.dto.response.ApplicationResponse;
 import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.dto.response.JobResponse;
+import com.manh.job.dto.response.ResumeResponse;
 import com.manh.job.dto.response.UserResponse;
 import com.manh.job.mapper.ApplicationMapper;
 import com.manh.job.modal.Application;
@@ -18,131 +24,181 @@ import com.manh.job.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
+
     private final ApplicationRepository applicationRepository;
     private final ApplicationNoteRepository applicationNoteRepository;
+    private final JobClient jobClient;
+    private final CompanyClient companyClient;
+    private final ResumeClient resumeClient;
+    private final UserClient userClient;
 
     @Override
     public ApplicationResponse createApplication(Long candidateId, CreateApplicationRequest req) throws Exception {
-        if(applicationRepository.existsByCandidateIdAndJobId(candidateId,req.getJobId())) {
+        if (applicationRepository.existsByCandidateIdAndJobId(candidateId, req.getJobId())) {
             throw new Exception("You have already applied");
         }
-        Long companyId = 1L;
-        Long employeeId = 1L;
-        //  todo fetch job
 
-        //  todo fetch resume
+        JobResponse job = fetchJob(req.getJobId());
+        if (job.getStatus() != JobStatus.OPEN || !Boolean.TRUE.equals(job.getActive())) {
+            throw new Exception("Job is not open for applications");
+        }
+
+        ResumeResponse resume = fetchResume(req.getResumeId(), candidateId);
+        if (!candidateId.equals(resume.getCandidateId())) {
+            throw new Exception("Resume does not belong to you");
+        }
+        if (Boolean.FALSE.equals(resume.getIsActive())) {
+            throw new Exception("Resume is not active");
+        }
+
+        Long companyId = resolveCompanyId(job);
+        Long employerId = job.getEmployerId();
+        if (employerId == null) {
+            throw new Exception("Job does not have an associated employer");
+        }
 
         Application application = ApplicationMapper.toEntity(
-                req,candidateId,companyId, employeeId
+                req, candidateId, companyId, employerId
         );
         Application saved = applicationRepository.save(application);
-        // todo AI screening runs in a background thread
         return buildFullResponse(saved);
     }
 
     @Override
-    public ApplicationResponse getApplicationById(Long id) throws Exception {
+    public ApplicationResponse getApplicationById(Long id, Long userId) throws Exception {
         Application application = getApplicationEntity(id);
+        assertCanView(application, userId);
         return buildFullResponse(application);
     }
 
     @Override
     public List<ApplicationResponse> getMyApplications(Long candidateId) {
         return applicationRepository.findByCandidateId(candidateId)
-                .stream().map(
-                        this::buildFullResponse
-                ).toList();
+                .stream()
+                .map(this::buildFullResponse)
+                .toList();
     }
 
     @Override
-    public List<ApplicationResponse> getApplicationsForJob(Long jobId) {
+    public List<ApplicationResponse> getApplicationsForJob(Long jobId, Long employerId) throws Exception {
+        JobResponse job = fetchJob(jobId);
+        if (!employerId.equals(job.getEmployerId())) {
+            throw new Exception("you are not the employer for this job");
+        }
         return applicationRepository.findByJobId(jobId)
-                .stream().map(
-                        this::buildFullResponse
-                ).toList();
+                .stream()
+                .map(this::buildFullResponse)
+                .toList();
     }
 
     @Override
     public List<ApplicationResponse> getApplicationsForCompany(
             Long userId,
             CompanyApplicationFilterRequest filter
-    ) {
-        // todo: fetch company by ownerId
-        Long companyId = 1L;
+    ) throws Exception {
+        CompanyResponse company = fetchCompanyByOwner(userId);
         Sort sort = buildSort(filter.getSortBy());
-        return  applicationRepository.findAll(ApplicationSpecification.forCompanyWithFilters(
-                companyId,
-                filter.getJobId(),
-                filter.getStatus(),
-                filter.getIsStarred(),
-                filter.getAiShortListStatus(),
-                filter.getMinAiScore()
-        ),sort).stream().map(
-                this::buildFullResponse
-        ).toList();
+        return applicationRepository.findAll(
+                ApplicationSpecification.forCompanyWithFilters(
+                        company.getId(),
+                        filter.getJobId(),
+                        filter.getStatus(),
+                        filter.getIsStarred(),
+                        filter.getAiShortListStatus(),
+                        filter.getMinAiScore()
+                ),
+                sort
+        ).stream().map(this::buildFullResponse).toList();
     }
 
     private Sort buildSort(String sortBy) {
-        if("AI_SCORE_DESC".equals(sortBy)){
+        if ("AI_SCORE_DESC".equals(sortBy)) {
             return Sort.by(Sort.Order.desc("aiScore").with(Sort.NullHandling.NULLS_LAST));
         }
-        else if("AI_SCORE_ASC".equals(sortBy)){
+        if ("AI_SCORE_ASC".equals(sortBy)) {
             return Sort.by(Sort.Order.asc("aiScore").with(Sort.NullHandling.NULLS_LAST));
         }
         return Sort.by(Sort.Direction.DESC, "appliedAt");
     }
 
     @Override
-    public ApplicationResponse updateStatus(Long applicationId,Long employerId, ApplicationStatus status) throws Exception {
+    public ApplicationResponse updateStatus(
+            Long applicationId,
+            Long employerId,
+            ApplicationStatus status
+    ) throws Exception {
         Application application = getApplicationEntity(applicationId);
         assertEmployer(application, employerId);
-        if(application.getStatus()==ApplicationStatus.WITHDRAWN){
+        if (application.getStatus() == ApplicationStatus.WITHDRAWN) {
             throw new Exception("candidate have already withdrawn");
         }
+        assertEmployerAllowedStatus(status);
         application.setStatus(status);
-        Application savedApplication= applicationRepository.save(application);
-        return buildFullResponse(savedApplication);
+        return buildFullResponse(applicationRepository.save(application));
     }
 
+    private void assertEmployerAllowedStatus(ApplicationStatus status) throws Exception {
+        if (status == null || status == ApplicationStatus.WITHDRAWN) {
+            throw new Exception("Invalid application status");
+        }
+        switch (status) {
+            case PENDING, REVIEWING, SHORTLISTED, INTERVIEW_SCHEDULED, REJECTED, HIRED -> {
+            }
+            default -> throw new Exception("Invalid application status");
+        }
+    }
 
     @Override
-    public ApplicationResponse withDraw(Long applicationId, Long candidateId, WithdrawApplicationRequest req) throws Exception {
+    public ApplicationResponse withDraw(
+            Long applicationId,
+            Long candidateId,
+            WithdrawApplicationRequest req
+    ) throws Exception {
         Application application = getApplicationEntity(applicationId);
-        assertCandidate(application,candidateId);
+        assertCandidate(application, candidateId);
         application.setStatus(ApplicationStatus.WITHDRAWN);
         application.setWithdrawnReason(req.getReason());
-        Application savedApplication= applicationRepository.save(application);
-        return buildFullResponse(savedApplication);
+        application.setWithdrawnAt(LocalDateTime.now());
+        return buildFullResponse(applicationRepository.save(application));
     }
 
     @Override
     public ApplicationResponse toggleStar(Long applicationId, Long employerId) throws Exception {
         Application application = getApplicationEntity(applicationId);
         assertEmployer(application, employerId);
-        application.setIsStarred(!application.getIsStarred());
-        Application saved = applicationRepository.save(application);
-        return buildFullResponse(saved);
+        boolean current = Boolean.TRUE.equals(application.getIsStarred());
+        application.setIsStarred(!current);
+        return buildFullResponse(applicationRepository.save(application));
     }
 
     @Override
-    public void deleteApplication(Long applicationId) throws Exception {
+    public void deleteApplication(Long applicationId, Long candidateId) throws Exception {
         Application application = getApplicationEntity(applicationId);
-        assertCandidate(application, applicationId);
+        assertCandidate(application, candidateId);
         applicationRepository.delete(application);
     }
 
     @Override
     public Application getApplicationEntity(Long id) throws Exception {
         return applicationRepository.findById(id).orElseThrow(
-                ()-> new Exception("Not found")
+                () -> new Exception("Not found")
         );
+    }
+
+    private void assertCanView(Application application, Long userId) throws Exception {
+        if (application.getCandidateId().equals(userId)
+                || application.getEmployerId().equals(userId)) {
+            return;
+        }
+        throw new Exception("you are not allowed to view this application");
     }
 
     private void assertEmployer(Application application, Long employerId) throws Exception {
@@ -157,17 +213,69 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
+    private JobResponse fetchJob(Long jobId) throws Exception {
+        try {
+            JobResponse job = jobClient.getJobById(jobId);
+            if (job == null) {
+                throw new Exception("Job not found");
+            }
+            return job;
+        } catch (RestClientException ex) {
+            throw new Exception("Job not found");
+        }
+    }
+
+    private ResumeResponse fetchResume(Long resumeId, Long candidateId) throws Exception {
+        try {
+            ResumeResponse resume = resumeClient.getResumeById(resumeId, candidateId);
+            if (resume == null) {
+                throw new Exception("Resume not found");
+            }
+            return resume;
+        } catch (RestClientException ex) {
+            throw new Exception("Resume not found");
+        }
+    }
+
+    private CompanyResponse fetchCompanyByOwner(Long ownerId) throws Exception {
+        try {
+            CompanyResponse company = companyClient.getCompanyByOwnerId(ownerId);
+            if (company == null) {
+                throw new Exception("Company not found");
+            }
+            return company;
+        } catch (RestClientException ex) {
+            throw new Exception("Company not found");
+        }
+    }
+
+    private Long resolveCompanyId(JobResponse job) throws Exception {
+        if (job.getCompany() != null && job.getCompany().getId() != null) {
+            return job.getCompany().getId();
+        }
+        throw new Exception("Job does not have an associated company");
+    }
+
     public ApplicationResponse buildFullResponse(Application application) {
-        JobResponse job = JobResponse.builder().id(application.getJobId()).build();
-        CompanyResponse company = CompanyResponse.builder().id(application.getCompanyId()).build();
-        UserResponse candidate = UserResponse.builder().id(application.getCandidateId()).build();
+        JobResponse job = null;
+        CompanyResponse company = null;
+        UserResponse candidate = null;
+        try {
+            job = jobClient.getJobById(application.getJobId());
+        } catch (RestClientException ignored) {
+            job = JobResponse.builder().id(application.getJobId()).build();
+        }
+        try {
+            company = companyClient.getCompanyById(application.getCompanyId());
+        } catch (RestClientException ignored) {
+            company = CompanyResponse.builder().id(application.getCompanyId()).build();
+        }
+        try {
+            candidate = userClient.getUserById(application.getCandidateId());
+        } catch (RestClientException ignored) {
+            candidate = UserResponse.builder().id(application.getCandidateId()).build();
+        }
         List<ApplicationNote> notes = applicationNoteRepository.findByApplicationId(application.getId());
-        return ApplicationMapper.toResponse(
-                application,
-                notes,
-                job,
-                company,
-                candidate
-        );
+        return ApplicationMapper.toResponse(application, notes, job, company, candidate);
     }
 }

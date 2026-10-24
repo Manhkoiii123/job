@@ -2,23 +2,28 @@ package com.manh.job.service.impl;
 
 import com.manh.job.domain.UserRole;
 import com.manh.job.domain.UserStatus;
-import com.manh.job.mapper.UserMapper;
-import com.manh.job.modal.User;
 import com.manh.job.dto.request.LoginRequest;
 import com.manh.job.dto.request.SignupRequest;
 import com.manh.job.dto.response.AuthResponse;
+import com.manh.job.mapper.UserMapper;
+import com.manh.job.modal.User;
 import com.manh.job.repository.UserRepository;
 import com.manh.job.security.CustomUserDetailsService;
 import com.manh.job.security.JwtProvider;
 import com.manh.job.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.Authentication;
+
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +35,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse signup(SignupRequest req) throws Exception {
-        if(userRepository.existsByEmail(req.getEmail())){
-            throw new Exception("Email already registered: "+ req.getEmail());
+        if (userRepository.existsByEmail(req.getEmail())) {
+            throw new Exception("Email already registered: " + req.getEmail());
         }
-        if(req.getRole() == UserRole.ROLE_ADMIN){
+        if (req.getRole() == UserRole.ROLE_ADMIN) {
             throw new Exception("Can't sign up as admin");
         }
         User user = User.builder()
@@ -47,9 +52,12 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         User saveUser = userRepository.save(user);
 
-        Authentication authentication
-                = new UsernamePasswordAuthenticationToken(
-                saveUser.getEmail(), saveUser.getPassword()
+        Collection<? extends GrantedAuthority> authorities =
+                List.of(new SimpleGrantedAuthority(saveUser.getRole().name()));
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                saveUser.getEmail(),
+                null,
+                authorities
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication, saveUser.getId());
@@ -65,11 +73,20 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest req) throws Exception {
+        User user = userRepository.findByEmail(req.getEmail());
+        if (user == null) {
+            throw new Exception("User not found with email: " + req.getEmail());
+        }
+        if (user.getStatus() == UserStatus.SUSPENDED) {
+            throw new Exception("Account is suspended");
+        }
+        if (user.getStatus() == UserStatus.DELETED) {
+            throw new Exception("Account is deleted");
+        }
 
         Authentication authentication = authenticate(req.getEmail(), req.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User user = userRepository.findByEmail(req.getEmail());
         String token = jwtProvider.generateToken(authentication, user.getId());
 
         user.setLastLogin(LocalDateTime.now());
@@ -82,9 +99,9 @@ public class AuthServiceImpl implements AuthService {
         response.setUser(UserMapper.toDTO(user));
         return response;
     }
+
     private Authentication authenticate(String email, String password) throws Exception {
-        UserDetails userDetails = customUserDetailsService
-                .loadUserByUsername(email);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
         if (userDetails == null) {
             throw new Exception("User not found with email: " + email);
         }

@@ -38,9 +38,10 @@ public class EducationController {
 
 	@GetMapping
 	public ResponseEntity<List<EducationResponse>> getEducations(
-			@PathVariable Long resumeId
-	) {
-		return ResponseEntity.ok(educationService.getEducations(resumeId));
+			@PathVariable Long resumeId,
+			@RequestHeader("X-User-Id") Long candidateId
+	) throws Exception {
+		return ResponseEntity.ok(educationService.getEducations(resumeId, candidateId));
 	}
 
 	@PutMapping("/{educationId}")

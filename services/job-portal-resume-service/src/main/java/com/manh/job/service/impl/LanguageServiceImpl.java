@@ -36,7 +36,9 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public List<LanguageResponse> getLanguages(Long resumeId) {
+    public List<LanguageResponse> getLanguages(Long resumeId, Long candidateId) throws Exception {
+        Resume resume = resumeService.getResumeEntity(resumeId);
+        assertOwner(resume, candidateId);
         return languageRepository.findByResume_IdOrderByDisplayOrderAsc(resumeId)
                 .stream().map(ResumeMapper::toLanguageResponse).toList();
     }
