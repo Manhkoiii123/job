@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: lb://job-user-service
+              predicates:
+                - Path=/auth/**
+            - id: user-service
+              uri: lb://job-user-service
+              predicates:
+                - Path=/api/users/**
+            - id: company-service
+              uri: lb://job-portal-company-service
+              predicates:
+                - Path=/api/companies/**
+            - id: job-service-jobs
+              uri: lb://job-portal-job-service
+              predicates:
+                - Path=/api/jobs/**
+            - id: job-service-categories
+              uri: lb://job-portal-job-service
+              predicates:
+                - Path=/api/job-categories/**
+            - id: job-service-skills
+              uri: lb://job-portal-job-service
+              predicates:
+                - Path=/api/job-skills/**
+            - id: job-service-tags
+              uri: lb://job-portal-job-service
+              predicates:
+                - Path=/api/job-tags/**
+            - id: resume-service
+              uri: lb://job-portal-resume-service
+              predicates:
+                - Path=/api/resumes/**
+            - id: application-service
+              uri: lb://job-portal-application-service
+              predicates:
+                - Path=/api/applications/**
+            - id: preferences-service
+              uri: lb://job-portal-preferences-service
+              predicates:
+                - Path=/api/saved-jobs/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+jwt:
+  secret: asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh

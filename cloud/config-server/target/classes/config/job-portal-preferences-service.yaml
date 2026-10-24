@@ -1,0 +1,9 @@
+server:
+  port: 5006
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/job_portal_preferences
+    username: postgres
+    password: 123456789
+    driver-class-name: org.postgresql.Driver

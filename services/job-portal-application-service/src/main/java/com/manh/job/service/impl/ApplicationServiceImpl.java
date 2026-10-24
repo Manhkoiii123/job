@@ -24,7 +24,7 @@ import com.manh.job.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
+import feign.FeignException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -220,7 +220,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 throw new Exception("Job not found");
             }
             return job;
-        } catch (RestClientException ex) {
+        } catch (FeignException ex) {
             throw new Exception("Job not found");
         }
     }
@@ -232,7 +232,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 throw new Exception("Resume not found");
             }
             return resume;
-        } catch (RestClientException ex) {
+        } catch (FeignException ex) {
             throw new Exception("Resume not found");
         }
     }
@@ -244,7 +244,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 throw new Exception("Company not found");
             }
             return company;
-        } catch (RestClientException ex) {
+        } catch (FeignException ex) {
             throw new Exception("Company not found");
         }
     }
@@ -262,17 +262,17 @@ public class ApplicationServiceImpl implements ApplicationService {
         UserResponse candidate = null;
         try {
             job = jobClient.getJobById(application.getJobId());
-        } catch (RestClientException ignored) {
+        } catch (FeignException ignored) {
             job = JobResponse.builder().id(application.getJobId()).build();
         }
         try {
             company = companyClient.getCompanyById(application.getCompanyId());
-        } catch (RestClientException ignored) {
+        } catch (FeignException ignored) {
             company = CompanyResponse.builder().id(application.getCompanyId()).build();
         }
         try {
             candidate = userClient.getUserById(application.getCandidateId());
-        } catch (RestClientException ignored) {
+        } catch (FeignException ignored) {
             candidate = UserResponse.builder().id(application.getCandidateId()).build();
         }
         List<ApplicationNote> notes = applicationNoteRepository.findByApplicationId(application.getId());

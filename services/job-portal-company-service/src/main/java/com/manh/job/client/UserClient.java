@@ -1,26 +1,13 @@
 package com.manh.job.client;
 
 import com.manh.job.dto.response.UserResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClient;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-@Component
-public class UserClient {
+@FeignClient(name = "job-user-service")
+public interface UserClient {
 
-    private final RestClient restClient;
-
-    public UserClient(
-            RestClient.Builder restClientBuilder,
-            @Value("${services.user.url:http://localhost:5001}") String userServiceUrl
-    ) {
-        this.restClient = restClientBuilder.baseUrl(userServiceUrl).build();
-    }
-
-    public UserResponse getUserById(Long userId) {
-        return restClient.get()
-                .uri("/api/users/{userId}", userId)
-                .retrieve()
-                .body(UserResponse.class);
-    }
+    @GetMapping("/api/users/{userId}")
+    UserResponse getUserById(@PathVariable("userId") Long userId);
 }

@@ -6,7 +6,6 @@ import com.manh.job.domain.UserStatus;
 import com.manh.job.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class AdminGuard {
                     || user.getStatus() != UserStatus.ACTIVE) {
                 throw new Exception("Admin access required");
             }
-        } catch (RestClientException ex) {
+        } catch (Exception ex) {
             throw new Exception("Admin access required");
         }
     }

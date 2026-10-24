@@ -16,7 +16,7 @@ import com.manh.job.service.SavedJobService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
+import feign.FeignException;
 
 import java.util.List;
 
@@ -110,7 +110,7 @@ public class SavedJobServiceImpl implements SavedJobService {
                 throw new Exception("Job not found");
             }
             return job;
-        } catch (RestClientException ex) {
+        } catch (FeignException ex) {
             throw new Exception("Job not found");
         }
     }
@@ -122,7 +122,7 @@ public class SavedJobServiceImpl implements SavedJobService {
                 throw new Exception("Company not found");
             }
             return company;
-        } catch (RestClientException ex) {
+        } catch (FeignException ex) {
             throw new Exception("Company not found");
         }
     }
@@ -139,12 +139,12 @@ public class SavedJobServiceImpl implements SavedJobService {
         CompanyResponse company = null;
         try {
             job = jobClient.getJobById(savedJob.getJobId());
-        } catch (RestClientException ignored) {
+        } catch (FeignException ignored) {
             // Job may have been deleted; still return saved record with denormalized ids.
         }
         try {
             company = companyClient.getCompanyById(savedJob.getCompanyId());
-        } catch (RestClientException ignored) {
+        } catch (FeignException ignored) {
             // Company may have been deleted; still return saved record with denormalized ids.
         }
         return SavedJobMapper.toResponse(savedJob, job, company);

@@ -1,0 +1,2 @@
+com\manh\job\gateway\ApiGatewayApplication.class
+com\manh\job\gateway\security\JwtAuthGlobalFilter.class

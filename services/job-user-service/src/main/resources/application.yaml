@@ -1,22 +1,21 @@
-server:
-  port: 5001
 spring:
   application:
     name: job-user-service
-
+  config:
+    import: optional:configserver:http://localhost:8888
   datasource:
     url: jdbc:postgresql://localhost:5432/job_portal_user
     username: postgres
     password: 123456789
     driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    open-in-view: false
-    properties:
-     hibernate:
-       format_sql: true
-       dialect: org.hibernate.dialect.PostgreSQLDialect
 
+server:
+  port: 5001
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+jwt:
+  secret: asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh
