@@ -106,6 +106,8 @@ Chi tiết từng file nằm ở **cuối tài liệu** → mục **“Bản đ�
 
 **Muốn làm theo tay từ A → Z?** → nhảy tới mục **“Triển khai từ đầu đến cuối”** (sau STEP 42).
 
+**Tiếp theo (AI Gemini, steps 43–50):** xem [`docs/ai-assistant-setup-43-50.md`](ai-assistant-setup-43-50.md).
+
 ---
 
 # STEP 38 — Eureka: Đăng ký mọi microservice vào “danh bạ”

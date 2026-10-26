@@ -1,0 +1,85 @@
+# Override: build image bằng Dockerfile thay vì Jib
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.dockerfile.yml build
+#   docker compose -f docker-compose.yml -f docker-compose.dockerfile.yml up -d
+
+services:
+  eureka-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: cloud/eureka-server
+        ARTIFACT: eureka-server
+
+  config-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: cloud/config-server
+        ARTIFACT: config-server
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: cloud/api-gateway
+        ARTIFACT: api-gateway
+
+  job-user-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-user-service
+        ARTIFACT: job-user-service
+
+  job-portal-company-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-company-service
+        ARTIFACT: job-portal-company-service
+
+  job-portal-job-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-job-service
+        ARTIFACT: job-portal-job-service
+
+  job-portal-resume-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-resume-service
+        ARTIFACT: job-portal-resume-service
+
+  job-portal-application-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-application-service
+        ARTIFACT: job-portal-application-service
+
+  job-portal-preferences-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-preferences
+        ARTIFACT: job-portal-preferences-service
+
+  job-portal-ai-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-ai-service
+        ARTIFACT: job-portal-ai-service

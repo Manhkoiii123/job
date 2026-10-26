@@ -1,0 +1,172 @@
+# Job Portal — multi-container stack (step 54)
+# Prereq: build images first (pick one):
+#   A) Jib:        .\scripts\docker-build-images.ps1
+#   B) Dockerfile: .\scripts\docker-build-images-dockerfile.ps1
+#      (uses docker-compose.dockerfile.yml override)
+# Usage:
+#   copy .env.example .env
+#   docker compose up -d
+
+name: job-portal
+
+x-java-common-env: &java-common-env
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+  SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+  SPRING_CLOUD_CONFIG_OVERRIDE_SYSTEM_PROPERTIES: "false"
+  SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+  SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456789}
+  JWT_SECRET: ${JWT_SECRET:-asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh}
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: job-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456789}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks: [job-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  eureka-server:
+    image: job-portal/eureka-server:latest
+    container_name: job-eureka
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: eureka-server
+    ports:
+      - "8761:8761"
+    networks: [job-net]
+
+  config-server:
+    image: job-portal/config-server:latest
+    container_name: job-config
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8888:8888"
+    depends_on:
+      eureka-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-user-service:
+    image: job-portal/job-user-service:latest
+    container_name: job-user
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_user
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-company-service:
+    image: job-portal/job-portal-company-service:latest
+    container_name: job-company
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_company
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-job-service:
+    image: job-portal/job-portal-job-service:latest
+    container_name: job-job
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_job
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-resume-service:
+    image: job-portal/job-portal-resume-service:latest
+    container_name: job-resume
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_resume
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-application-service:
+    image: job-portal/job-portal-application-service:latest
+    container_name: job-application
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_application
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      job-portal-job-service:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-preferences-service:
+    image: job-portal/job-portal-preferences-service:latest
+    container_name: job-preferences
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_preferences
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-ai-service:
+    image: job-portal/job-portal-ai-service:latest
+    container_name: job-ai
+    environment:
+      <<: *java-common-env
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      config-server:
+        condition: service_started
+    networks: [job-net]
+
+  api-gateway:
+    image: job-portal/api-gateway:latest
+    container_name: job-gateway
+    environment:
+      <<: *java-common-env
+    ports:
+      - "8080:8080"
+    depends_on:
+      eureka-server:
+        condition: service_started
+      job-user-service:
+        condition: service_started
+      job-portal-job-service:
+        condition: service_started
+    networks: [job-net]
+
+networks:
+  job-net:
+    driver: bridge
+
+volumes:
+  pgdata:

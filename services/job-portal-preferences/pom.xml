@@ -12,6 +12,7 @@
 	<name>job-portal-preferences-service</name>
 	<properties>
 		<java.version>17</java.version>
+		<jib.container.port>5006</jib.container.port>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,6 +77,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

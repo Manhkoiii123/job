@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: job-portal-ai-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  ai:
+    model:
+      chat: google-genai
+      embedding:
+        text: google-genai
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.0-flash
+        embedding:
+          api-key: ${GEMINI_API_KEY}
+          text:
+            model: gemini-embedding-001
+
+server:
+  port: 5007
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

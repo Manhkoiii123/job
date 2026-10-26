@@ -1,0 +1,40 @@
+# =============================================================================
+# Dockerfile "bình thường" (không dùng Jib) — multi-stage
+# Stage 1: Maven compile + package jar
+# Stage 2: Chỉ mang JRE + file jar (image chạy gọn hơn)
+#
+# Ví dụ build Eureka:
+#   docker build -f docker/Dockerfile.jvm ^
+#     --build-arg MODULE=cloud/eureka-server ^
+#     --build-arg ARTIFACT=eureka-server ^
+#     -t job-portal/eureka-server:latest .
+# =============================================================================
+
+# ----- Stage build -----
+FROM public.ecr.aws/docker/library/maven:3.9.9-eclipse-temurin-17 AS build
+
+WORKDIR /workspace
+
+# Copy POM + source monorepo (cần để -am resolve dependency)
+COPY pom.xml ./
+COPY common-lib ./common-lib
+COPY cloud ./cloud
+COPY services ./services
+
+# MODULE = đường dẫn Maven module, ví dụ cloud/eureka-server
+ARG MODULE
+RUN mvn -B -f pom.xml -pl ${MODULE} -am package -DskipTests
+
+# ----- Stage runtime -----
+FROM public.ecr.aws/docker/library/eclipse-temurin:17-jre
+
+WORKDIR /app
+
+ARG MODULE
+ARG ARTIFACT
+ARG VERSION=0.0.1-SNAPSHOT
+
+# Copy đúng jar Spring Boot đã package
+COPY --from=build /workspace/${MODULE}/target/${ARTIFACT}-${VERSION}.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -1,0 +1,15 @@
+**/target
+**/.idea
+**/.vscode
+**/.git
+**/node_modules
+**/*.iml
+**/mvnw
+**/mvnw.cmd
+**/.mvn
+docs
+agent-transcripts
+**/*.md
+.env
+**/jib-image.tar
+**/.env

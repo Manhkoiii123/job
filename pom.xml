@@ -25,8 +25,14 @@
         <java.version>17</java.version>
         <spring.boot.version>4.0.7</spring.boot.version>
         <spring-cloud.version>2025.1.2</spring-cloud.version>
+        <spring-ai.version>2.0.0</spring-ai.version>
         <jjwt.version>0.12.6</jjwt.version>
         <lombok.version>1.18.48</lombok.version>
+        <jib-maven-plugin.version>3.5.1</jib-maven-plugin.version>
+        <!-- ECR Public mirror avoids anonymous Docker Hub 401 / rate limits -->
+        <jib.from.image>public.ecr.aws/docker/library/eclipse-temurin:17-jre</jib.from.image>
+        <!-- Override per runnable module -->
+        <jib.container.port>8080</jib.container.port>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +41,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -85,8 +98,26 @@
                 </plugin>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib.maven.plugin</artifactId>
-                    <version>3.5.1</version>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
+                    <configuration>
+                        <from>
+                            <image>${jib.from.image}</image>
+                        </from>
+                        <to>
+                            <image>job-portal/${project.artifactId}</image>
+                            <tags>
+                                <tag>${project.version}</tag>
+                                <tag>latest</tag>
+                            </tags>
+                        </to>
+                        <container>
+                            <ports>
+                                <port>${jib.container.port}</port>
+                            </ports>
+                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        </container>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

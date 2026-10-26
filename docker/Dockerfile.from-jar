@@ -1,0 +1,21 @@
+# =============================================================================
+# Dockerfile mỏng: jar đã build sẵn trên máy (không Jib, không Maven trong image)
+#
+# Context = thư mục module (vì root .dockerignore loại **/target)
+#
+#   # từ root:
+#   .\services\job-user-service\mvnw.cmd -f pom.xml -pl cloud/eureka-server -am package -DskipTests
+#   cd cloud\eureka-server
+#   docker build -f ../../docker/Dockerfile.from-jar `
+#     --build-arg JAR_FILE=target/eureka-server-0.0.1-SNAPSHOT.jar `
+#     -t job-portal/eureka-server:latest .
+# =============================================================================
+
+FROM public.ecr.aws/docker/library/eclipse-temurin:17-jre
+
+WORKDIR /app
+
+ARG JAR_FILE
+COPY ${JAR_FILE} /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

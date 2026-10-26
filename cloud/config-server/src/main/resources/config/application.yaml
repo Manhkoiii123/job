@@ -1,15 +1,16 @@
 # Shared config for all microservices
+# Hostnames use env overrides so the same files work in IDE (localhost) and Docker Compose.
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
     register-with-eureka: true
     fetch-registry: true
   instance:
     prefer-ip-address: true
 
 jwt:
-  secret: asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh
+  secret: ${JWT_SECRET:asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh}
 
 spring:
   jpa:

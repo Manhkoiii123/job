@@ -12,6 +12,10 @@
 	<name>job-portal-application-service</name>
 	<description/>
 
+	<properties>
+		<jib.container.port>5005</jib.container.port>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.manh.job</groupId>
@@ -76,7 +80,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 

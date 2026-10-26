@@ -60,5 +60,10 @@ spring:
               predicates:
                 - Path=/api/saved-jobs/**
 
+            - id: ai-service
+              uri: lb://job-portal-ai-service
+              predicates:
+                - Path=/api/ai/**
+
 jwt:
-  secret: asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh
+  secret: ${JWT_SECRET:asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh}
