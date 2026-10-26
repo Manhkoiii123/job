@@ -6,6 +6,7 @@ import com.manh.job.client.ResumeClient;
 import com.manh.job.client.UserClient;
 import com.manh.job.domain.ApplicationStatus;
 import com.manh.job.domain.JobStatus;
+import com.manh.job.dto.event.ApplicationStatusChangedEvent;
 import com.manh.job.dto.request.CompanyApplicationFilterRequest;
 import com.manh.job.dto.request.CreateApplicationRequest;
 import com.manh.job.dto.request.WithdrawApplicationRequest;
@@ -14,12 +15,15 @@ import com.manh.job.dto.response.CompanyResponse;
 import com.manh.job.dto.response.JobResponse;
 import com.manh.job.dto.response.ResumeResponse;
 import com.manh.job.dto.response.UserResponse;
+import com.manh.job.event.ApplicationStatusChangedPublisher;
 import com.manh.job.mapper.ApplicationMapper;
 import com.manh.job.modal.Application;
 import com.manh.job.modal.ApplicationNote;
+import com.manh.job.modal.ApplicationStatusHistory;
 import com.manh.job.repository.ApplicationNoteRepository;
 import com.manh.job.repository.ApplicationRepository;
 import com.manh.job.repository.ApplicationSpecification;
+import com.manh.job.repository.ApplicationStatusHistoryRepository;
 import com.manh.job.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -35,6 +39,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final ApplicationNoteRepository applicationNoteRepository;
+    private final ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
+    private final ApplicationStatusChangedPublisher applicationStatusChangedPublisher;
     private final JobClient jobClient;
     private final CompanyClient companyClient;
     private final ResumeClient resumeClient;
@@ -141,8 +147,12 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new Exception("candidate have already withdrawn");
         }
         assertEmployerAllowedStatus(status);
+        ApplicationStatus previous = application.getStatus();
         application.setStatus(status);
-        return buildFullResponse(applicationRepository.save(application));
+        Application saved = applicationRepository.save(application);
+        recordStatusHistory(saved, previous, status, employerId);
+        publishStatusChanged(saved, previous, status);
+        return buildFullResponse(saved);
     }
 
     private void assertEmployerAllowedStatus(ApplicationStatus status) throws Exception {
@@ -164,10 +174,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     ) throws Exception {
         Application application = getApplicationEntity(applicationId);
         assertCandidate(application, candidateId);
+        ApplicationStatus previous = application.getStatus();
         application.setStatus(ApplicationStatus.WITHDRAWN);
         application.setWithdrawnReason(req.getReason());
         application.setWithdrawnAt(LocalDateTime.now());
-        return buildFullResponse(applicationRepository.save(application));
+        Application saved = applicationRepository.save(application);
+        recordStatusHistory(saved, previous, ApplicationStatus.WITHDRAWN, candidateId);
+        publishStatusChanged(saved, previous, ApplicationStatus.WITHDRAWN);
+        return buildFullResponse(saved);
     }
 
     @Override
@@ -254,6 +268,59 @@ public class ApplicationServiceImpl implements ApplicationService {
             return job.getCompany().getId();
         }
         throw new Exception("Job does not have an associated company");
+    }
+
+    private void recordStatusHistory(
+            Application application,
+            ApplicationStatus previous,
+            ApplicationStatus next,
+            Long changedBy
+    ) {
+        applicationStatusHistoryRepository.save(ApplicationStatusHistory.builder()
+                .applicationId(application.getId())
+                .previousStatus(previous)
+                .newStatus(next)
+                .changedBy(changedBy)
+                .changedAt(LocalDateTime.now())
+                .build());
+    }
+
+    private void publishStatusChanged(
+            Application application,
+            ApplicationStatus previous,
+            ApplicationStatus next
+    ) {
+        JobResponse job = null;
+        CompanyResponse company = null;
+        UserResponse candidate = null;
+        try {
+            job = jobClient.getJobById(application.getJobId());
+        } catch (FeignException ignored) {
+        }
+        try {
+            company = companyClient.getCompanyById(application.getCompanyId());
+        } catch (FeignException ignored) {
+        }
+        try {
+            candidate = userClient.getUserById(application.getCandidateId());
+        } catch (FeignException ignored) {
+        }
+
+        ApplicationStatusChangedEvent event = ApplicationStatusChangedEvent.builder()
+                .applicationId(application.getId())
+                .candidateId(application.getCandidateId())
+                .employerId(application.getEmployerId())
+                .jobId(application.getJobId())
+                .companyId(application.getCompanyId())
+                .candidateEmail(candidate != null ? candidate.getEmail() : null)
+                .candidateName(candidate != null ? candidate.getFullName() : null)
+                .jobTitle(job != null ? job.getTitle() : null)
+                .companyName(company != null ? company.getName() : null)
+                .previousStatus(previous)
+                .newStatus(next)
+                .changedAt(LocalDateTime.now())
+                .build();
+        applicationStatusChangedPublisher.publish(event);
     }
 
     public ApplicationResponse buildFullResponse(Application application) {

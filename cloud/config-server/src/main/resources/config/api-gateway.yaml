@@ -65,5 +65,10 @@ spring:
               predicates:
                 - Path=/api/ai/**
 
+            - id: notification-service
+              uri: lb://job-portal-notification-service
+              predicates:
+                - Path=/api/notifications/**
+
 jwt:
   secret: ${JWT_SECRET:asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh}

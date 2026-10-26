@@ -63,6 +63,7 @@ com\manh\job\dto\response\AuthResponse.class
 com\manh\job\dto\response\CompanyResponse$CompanyResponseBuilder.class
 com\manh\job\domain\CompanyStatus.class
 com\manh\job\domain\SocialPlatform.class
+com\manh\job\dto\event\ApplicationStatusChangedEvent.class
 com\manh\job\dto\ai\JobInsightResponse.class
 com\manh\job\dto\CompanySummaryResponse.class
 com\manh\job\dto\ApiResponse.class
@@ -94,6 +95,7 @@ com\manh\job\dto\response\JobCategoryResponse.class
 com\manh\job\dto\response\ResumeResponse.class
 com\manh\job\dto\ai\SemanticSearchDocument.class
 com\manh\job\domain\ExperienceLevel.class
+com\manh\job\domain\NotificationDeliveryStatus.class
 com\manh\job\dto\ai\CoverLetterRequest$CoverLetterRequestBuilder.class
 com\manh\job\domain\JobType.class
 com\manh\job\dto\request\JobRequest$JobRequestBuilder.class
@@ -107,6 +109,7 @@ com\manh\job\dto\response\WorkExperienceResponse$WorkExperienceResponseBuilder.c
 com\manh\job\dto\request\AddLanguageRequest$AddLanguageRequestBuilder.class
 com\manh\job\dto\request\JobTagRequest.class
 com\manh\job\dto\response\UserResponse.class
+com\manh\job\dto\event\ApplicationStatusChangedEvent$ApplicationStatusChangedEventBuilder.class
 com\manh\job\domain\LanguageProficiency.class
 com\manh\job\dto\request\JobRequest.class
 com\manh\job\dto\ai\SemanticSearchRequest$SemanticSearchRequestBuilder.class

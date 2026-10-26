@@ -83,3 +83,11 @@ services:
       args:
         MODULE: services/job-portal-ai-service
         ARTIFACT: job-portal-ai-service
+
+  job-portal-notification-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jvm
+      args:
+        MODULE: services/job-portal-notification-service
+        ARTIFACT: job-portal-notification-service

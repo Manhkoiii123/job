@@ -11,6 +11,8 @@ Tài liệu này đi theo 4 video + **code đã có trong repo**:
 
 Muốn hiểu **từng dòng code** → kéo xuống mục **「Phụ lục — Giải thích từng dòng code」** (cuối file).
 
+Deploy lên VPS (video 59–68: Hub, Nginx, SSL): [`vps-deploy-59-68.md`](vps-deploy-59-68.md).
+
 ---
 
 ## File đã có trong repo (đối chiếu khi học)

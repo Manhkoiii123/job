@@ -16,8 +16,42 @@ x-java-common-env: &java-common-env
   SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
   SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-123456789}
   JWT_SECRET: ${JWT_SECRET:-asdfghjklpoiuytrewqzxcvbnmlkjhglpouhggfdsawqwertyyuiioplmnbvcxzasdfgh}
+  KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: job-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks: [job-net]
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: job-kafka
+    depends_on: [zookeeper]
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks: [job-net]
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: job-mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks: [job-net]
+
   postgres:
     image: postgres:16
     container_name: job-postgres
@@ -120,6 +154,8 @@ services:
         condition: service_healthy
       config-server:
         condition: service_started
+      kafka:
+        condition: service_started
       job-portal-job-service:
         condition: service_started
     networks: [job-net]
@@ -145,6 +181,25 @@ services:
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     depends_on:
       config-server:
+        condition: service_started
+    networks: [job-net]
+
+  job-portal-notification-service:
+    image: job-portal/job-portal-notification-service:latest
+    container_name: job-notification
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_notification
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      kafka:
+        condition: service_started
+      mailhog:
         condition: service_started
     networks: [job-net]
 

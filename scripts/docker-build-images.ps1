@@ -20,7 +20,8 @@ $Modules = @(
     "services/job-portal-resume-service",
     "services/job-portal-application-service",
     "services/job-portal-preferences",
-    "services/job-portal-ai-service"
+    "services/job-portal-ai-service",
+    "services/job-portal-notification-service"
 )
 
 Write-Host "Building common-lib first..." -ForegroundColor Cyan

@@ -1,0 +1,208 @@
+# Production-oriented compose on VPS
+# Images pulled from Docker Hub — set DOCKERHUB_USER in .env
+# Usage on VPS:
+#   export DOCKERHUB_USER=youruser
+#   docker compose -f docker-compose.vps.yml --env-file .env pull
+#   docker compose -f docker-compose.vps.yml --env-file .env up -d
+#
+# Only Gateway publishes 8080 to host; Nginx proxies 80/443 -> 8080.
+# Postgres/Kafka/Eureka ports are NOT exposed publicly (safer).
+
+name: job-portal
+
+x-java-common-env: &java-common-env
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+  SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+  SPRING_CLOUD_CONFIG_OVERRIDE_SYSTEM_PROPERTIES: "false"
+  SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+  SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+  JWT_SECRET: ${JWT_SECRET}
+  KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks: [job-net]
+    restart: unless-stopped
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    depends_on: [zookeeper]
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks: [job-net]
+    restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    networks: [job-net]
+    restart: unless-stopped
+    # Do NOT publish 8025 on public VPS unless firewalled
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # path relative to this file's directory (deploy/) → repo docker/postgres/init
+      - ../docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks: [job-net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  eureka-server:
+    image: ${DOCKERHUB_USER}/job-portal-eureka-server:latest
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: eureka-server
+    networks: [job-net]
+    restart: unless-stopped
+
+  config-server:
+    image: ${DOCKERHUB_USER}/job-portal-config-server:latest
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on: [eureka-server]
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-user-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-user-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_user
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-company-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-company-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_company
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-job-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-job-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_job
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-resume-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-resume-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_resume
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-application-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-application-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_application
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-preferences-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-preferences-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_preferences
+    depends_on:
+      postgres:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-ai-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-ai-service:latest
+    environment:
+      <<: *java-common-env
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    depends_on: [config-server]
+    networks: [job-net]
+    restart: unless-stopped
+
+  job-portal-notification-service:
+    image: ${DOCKERHUB_USER}/job-portal-job-portal-notification-service:latest
+    environment:
+      <<: *java-common-env
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_portal_notification
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      mailhog:
+        condition: service_started
+    networks: [job-net]
+    restart: unless-stopped
+
+  api-gateway:
+    image: ${DOCKERHUB_USER}/job-portal-api-gateway:latest
+    environment:
+      <<: *java-common-env
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - eureka-server
+      - job-user-service
+      - job-portal-job-service
+    networks: [job-net]
+    restart: unless-stopped
+
+networks:
+  job-net:
+    driver: bridge
+
+volumes:
+  pgdata:

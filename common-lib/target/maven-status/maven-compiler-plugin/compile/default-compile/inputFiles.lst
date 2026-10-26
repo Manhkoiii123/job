@@ -8,6 +8,7 @@ D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\IndustryType.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\JobStatus.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\JobType.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\LanguageProficiency.java
+D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\NotificationDeliveryStatus.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\ProficiencyLevel.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\ResumeTemplate.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\domain\ResumeVisibility.java
@@ -32,6 +33,7 @@ D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\ai\SemanticSearchReq
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\ai\SemanticSearchResponse.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\ApiResponse.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\CompanySummaryResponse.java
+D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\event\ApplicationStatusChangedEvent.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\PersonalInfoResponse.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\request\AddApplicationNoteRequest.java
 D:\02_java\02_job\common-lib\src\main\java\com\manh\job\dto\request\AddEducationRequest.java
