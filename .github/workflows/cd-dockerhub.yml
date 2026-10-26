@@ -1,0 +1,102 @@
+# CD — Continuous Delivery (Docker Hub)
+# Push lên main/master hoặc tag v* → Jib build + push image lên Docker Hub.
+# Deploy VPS (tuỳ chọn): bật khi có secret VPS_HOST.
+# Giải thích từng dòng: docs/cicd-github-actions.md
+
+name: CD Docker Hub
+
+on:
+  push:
+    branches: [main, master]
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      deploy_vps:
+        description: "SSH pull+up trên VPS sau khi push image"
+        type: boolean
+        default: false
+
+env:
+  # Trùng convention scripts/push-images-dockerhub.ps1 + deploy/docker-compose.vps.yml
+  IMAGE_PREFIX: job-portal-
+
+jobs:
+  push-images:
+    name: Jib build & push
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Make Maven Wrapper executable
+        run: chmod +x services/job-user-service/mvnw
+
+      - name: Resolve image tags
+        id: tags
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG="${GITHUB_REF_NAME}"
+          else
+            TAG="latest"
+          fi
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "Tags: ${TAG}, ${SHORT_SHA}"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build common-lib
+        run: |
+          ./services/job-user-service/mvnw -B -f pom.xml \
+            -pl common-lib -am package -DskipTests
+
+      - name: Jib push all services
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          IMAGE_TAG: ${{ steps.tags.outputs.tag }}
+          SHORT_SHA: ${{ steps.tags.outputs.short_sha }}
+        run: bash scripts/ci-jib-push.sh
+
+  # Chỉ chạy khi bấm "Run workflow" và tick deploy_vps.
+  # (Không dùng secrets trong if — GitHub hạn chế; xem docs/cicd-github-actions.md)
+  deploy-vps:
+    name: Deploy on VPS (optional)
+    needs: push-images
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy_vps == true
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout (deploy configs)
+        uses: actions/checkout@v4
+
+      - name: SSH — pull & compose up
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.VPS_APP_DIR }}"
+            export DOCKERHUB_USER="${{ secrets.DOCKERHUB_USERNAME }}"
+            docker compose -f deploy/docker-compose.vps.yml --env-file deploy/.env pull
+            docker compose -f deploy/docker-compose.vps.yml --env-file deploy/.env up -d
+            docker image prune -f

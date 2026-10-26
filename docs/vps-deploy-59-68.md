@@ -23,6 +23,9 @@ File mẫu trong repo:
 | `deploy/docker-compose.vps.yml` | Compose cho VPS (image từ Hub) |
 | `deploy/.env.production.example` | Secret production |
 | `deploy/nginx/job-portal.conf` | Nginx reverse proxy |
+| [`docs/cicd-github-actions.md`](cicd-github-actions.md) | CI/CD: auto test + Jib push Hub (+ SSH deploy tuỳ chọn) |
+| `.github/workflows/ci.yml` | CI — `mvn verify` |
+| `.github/workflows/cd-dockerhub.yml` | CD — push image Docker Hub |
 
 ```text
 Máy dev                          Docker Hub                    VPS

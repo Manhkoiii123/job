@@ -13,6 +13,8 @@ Muốn hiểu **từng dòng code** → kéo xuống mục **「Phụ lục — 
 
 Deploy lên VPS (video 59–68: Hub, Nginx, SSL): [`vps-deploy-59-68.md`](vps-deploy-59-68.md).
 
+CI/CD GitHub Actions (build/test + Jib push Hub): [`cicd-github-actions.md`](cicd-github-actions.md).
+
 ---
 
 ## File đã có trong repo (đối chiếu khi học)
@@ -229,15 +231,37 @@ Ví dụ User Service (`services/job-user-service/pom.xml`):
 
 ## 52.D. Bước 3 — Build thử 1 image
 
-**Docker Desktop phải đang chạy** (cho `dockerBuild`).
+Chạy trên **máy local (Windows)**, **không** trên VPS.
+
+1. Bật **Docker Desktop** (cần daemon cho `jib:dockerBuild`).
+2. Mở PowerShell / terminal Cursor.
+3. `cd` vào **root repo** (thư mục có `pom.xml` parent), ví dụ:
 
 ```powershell
-# Từ root repo
+cd d:\02_java\02_job
+```
+
+4. Build image Eureka rồi kiểm tra:
+
+```powershell
+# cwd phải là root repo (d:\02_java\02_job)
 .\services\job-user-service\mvnw.cmd -f pom.xml `
   -pl cloud/eureka-server -am package jib:dockerBuild -DskipTests
 
+# Image nằm trong Docker Desktop local — xem danh sách:
 docker images job-portal/eureka-server
 ```
+
+| Lệnh / flag | Ý nghĩa |
+|-------------|----------|
+| `.\services\job-user-service\mvnw.cmd` | Maven Wrapper trong repo (không cần cài Maven global) |
+| `-f pom.xml` | Dùng parent POM ở **root** |
+| `-pl cloud/eureka-server` | Chỉ build module Eureka |
+| `-am` | Build thêm các module phụ thuộc (vd. parent) |
+| `package` | Đóng jar trước khi Jib đóng image |
+| `jib:dockerBuild` | Đẩy image vào Docker Desktop local |
+| `-DskipTests` | Bỏ test cho nhanh khi học Docker |
+| `docker images job-portal/eureka-server` | Liệt kê image local tên `job-portal/eureka-server` |
 
 Không bật được Docker? Kiểm tra plugin bằng tar:
 

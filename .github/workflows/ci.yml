@@ -1,0 +1,41 @@
+# CI — Continuous Integration
+# Chạy khi có push / pull request: biên dịch + test, không đẩy image.
+# Giải thích từng dòng: docs/cicd-github-actions.md
+
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Maven verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Make Maven Wrapper executable
+        run: chmod +x services/job-user-service/mvnw
+
+      - name: Build and test (all modules)
+        run: |
+          ./services/job-user-service/mvnw -B -f pom.xml \
+            clean verify \
+            -DfailIfNoSpecifiedTests=false
